@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import styled from 'styled-components';
+import GlobalStyle from './globalStyles';
+import { Fragment } from 'react/jsx-runtime';
+
+import { Routes, Route } from 'react-router-dom';
+
+import React from 'react';
+
+const Div = styled.div`
+    width: 300px;
+    margin: auto;
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
+    return (
+        <Fragment>
+            <NavigationTop />
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+            <Div>
+                <Routes>
+                    <Route path="/" element={<Startview />} />
+                    <Route path="books" element={<BooksView />} />
+                    <Route path="books/:id" element={<BookDetails />} />
+                    <Route path="bookcircles" element={<BookCirclesView />} />
+                    <Route path="bookcircles/:id" element={<BookCirclesGroup />} />
+                    <Route path="bookcircles/add" element={<CreateCircle />} />
+                    <Route path="profile" element={<ProfileView />} />
+                </Routes>
+            </Div>
+
+            <NavigationBottom />
+            <GlobalStyle />
+        </Fragment>
+    );
 }
 
-export default App
+export default App;
+
