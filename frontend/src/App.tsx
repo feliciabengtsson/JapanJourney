@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import GlobalStyle from './globalStyles';
+import GlobalStyle from './GlobalStyles';
 import { Fragment } from 'react/jsx-runtime';
 
 import { Routes, Route } from 'react-router-dom';
 
-import React from 'react';
+import StartView from './pages/StartView'
 
 const Div = styled.div`
     width: 300px;
@@ -14,21 +14,11 @@ const Div = styled.div`
 function App() {
     return (
         <Fragment>
-            <NavigationTop />
-
             <Div>
                 <Routes>
-                    <Route path="/" element={<Startview />} />
-                    <Route path="books" element={<BooksView />} />
-                    <Route path="books/:id" element={<BookDetails />} />
-                    <Route path="bookcircles" element={<BookCirclesView />} />
-                    <Route path="bookcircles/:id" element={<BookCirclesGroup />} />
-                    <Route path="bookcircles/add" element={<CreateCircle />} />
-                    <Route path="profile" element={<ProfileView />} />
+                    <Route path="/" element={<StartView />} />
                 </Routes>
             </Div>
-
-            <NavigationBottom />
             <GlobalStyle />
         </Fragment>
     );
