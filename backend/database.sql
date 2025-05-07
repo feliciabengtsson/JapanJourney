@@ -1,9 +1,7 @@
-PRAGMA foreign_keys = ON;
-
-DROP TABLE IF EXISTS places;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS favourites;
+DROP TABLE IF EXISTS places;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users (
 	users_id serial PRIMARY KEY,
@@ -18,33 +16,33 @@ CREATE TABLE IF NOT EXISTS places (
 	region TEXT,
 	category TEXT,
 	description TEXT,
-	img_url TEXT,
+	image_url TEXT,
 	avg_rating REAL DEFAULT 0,
 	lat REAL,
 	lon REAL
 );
 
 CREATE TABLE IF NOT EXISTS reviews (
-	reviews_id serial PRIMARY KEY,
-	user_id INTEGER ON DELETE CASCADE,
-	place_id INTEGER ON DELETE CASCADE,
+	reviews_id serial,
+	user_id INTEGER,
+	place_id INTEGER,
 	rating INTEGER CHECK (rating BETWEEN 1 AND 5),
 	comment TEXT,
 	created TIMESTAMP DEFAULT NOW(),
-	PRIMARY KEY (user_id, place_id),
+	PRIMARY KEY (reviews_id, user_id, place_id),
 	FOREIGN KEY(user_id) REFERENCES users(users_id),
 	FOREIGN KEY(place_id) REFERENCES places(places_id)
 );
 
 CREATE TABLE IF NOT EXISTS favourites (
-	user_id INTEGER ON DELETE CASCADE,
-	place_id INTEGER ON DELETE CASCADE,
+	user_id INTEGER,
+	place_id INTEGER,
 	PRIMARY KEY (user_id, place_id),
 	FOREIGN KEY(user_id) REFERENCES users(users_id),
 	FOREIGN KEY(place_id) REFERENCES places(places_id)
 );
 
-INSERT users (username, email, password) 
+INSERT INTO users (username, email, password) 
 VALUES 
 ('sakura123', 'sakura@example.com', 'hashed_pw1'),
 ('travelerjoe', 'joe@example.com', 'hashed_pw2'),
@@ -73,7 +71,7 @@ VALUES
 (3, 3, 4, 'Bra shopping men lite för mycket folk.');
 SELECT * FROM reviews;
 
-INSERT INTO favorites (user_id, place_id)
+INSERT INTO favourites (user_id, place_id)
 VALUES 
 (1, 2), -- sakura123 gillar Fuji
 (2, 1), -- joe gillar Fushimi Inari

@@ -3,3 +3,5 @@ node_modules
 *.sqlite
 *.sqlite-journalnode_modules
 dist
+.envnode_modules
+*.js
