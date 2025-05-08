@@ -17,7 +17,9 @@ const GlobalStyle = createGlobalStyle`
 	}  
 	body {
 		margin: 0;
-		background: var(--color-primary-light);
+		background-image: url('src/assets/images/background-sm.jpg');
+		background-size: cover;
+		background-position: center;
 		color: var(--color-neutral-dark);
 		min-height: 100vh;
 		min-width: 320px;
@@ -65,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
 
 	@font-face {
   		font-family: Hanayoru;
-  		src: url('src/assets/font/HanayoruDemo.ttf') format('truetype');
+  		src: url('src/assets/font/HanayoruDemo-woq59.ttf') format('truetype');
 	}
 `;
 

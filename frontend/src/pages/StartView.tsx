@@ -1,61 +1,57 @@
-import styled from 'styled-components';
-import { Fragment } from 'react/jsx-runtime';
-import BannerImg from '../assets/images/banner.jpg';
+import styled from "styled-components";
+import { Fragment } from "react/jsx-runtime";
 
-const ImgWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const DivHeader = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-top: 3rem;
 `;
-const Img = styled.img`
-    width: 100vw;
-    height: 7rem;
-    object-fit: cover;
-    @media (min-width: 890px) {
-        width: 50vw;
-        height: 9rem;
-    }
+const Icon = styled.i`
+	display: block;
+	font-size: 4rem;
+	font-weight: 800;
 `;
-const AboutTitle = styled.h2`
-    margin-bottom: 0;
+const TitleWrapper = styled.div`
+	width: 6rem;
 `;
-const List = styled.ul`
-    list-style-type: '✔';
-    font-size: 0.8rem;
+const LoginWrapper = styled.div`
+	position: absolute;
+	bottom: 15rem;
+`;
+const LoginPink = styled.div`
+	width: 248px;
+	height: 76px;
+	border-radius: 50px;
+	background: rgba(255, 144, 124, 0.68);
+`;
+const LoginRed = styled.div`
+	width: 86px;
+	height: 66px;
+	border-radius: 50px;
+	background: var(--color-secondary);
 `;
 
 function Startview() {
     return (
         <Fragment>
             <div id="main-wrapper">
-                <section id="introduction">
-                    <h1>CozyReads</h1>
-                    <p>
-                        A place for book lovers to gather, discuss, and discover new favorites. Curl
-                        up in your favorite chair, pour yourself a cup of tea, and let's dive into
-                        magical stories together!
-                    </p>
-                    <ImgWrapper>
-                        <Img src={BannerImg} alt="Logo" />
-                    </ImgWrapper>
-                </section>
-                <section id="about">
-                    <AboutTitle>About us</AboutTitle>
-                    <h3>What is CozyReads?</h3>
-                    <p>
-                        CozyReads is a warm and welcoming online book club where we share our love
-                        for books, discuss great reads, and find new literary adventures. Whether
-                        you love classics, fantasy, feel-good novels, or thrillers, there's a place
-                        for you here!
-                    </p>
-                    <p>Why join us?</p>
-                    <List>
-                        <li>Discover a new book every month</li>
-                        <li>Engage in discussions with fellow book lovers</li>
-                        <li>Get personalized book recommendations and reviews</li>
-                        <li>Find your reading community</li>
-                    </List>
-                </section>
+                <DivHeader>
+					<div>
+						<Icon className="hgi hgi-stroke hgi-location-01" />
+					</div>
+                    <TitleWrapper>
+						<h1>Japan Journey</h1>
+					</TitleWrapper>
+                </DivHeader>
+				<LoginWrapper>
+					<LoginPink>
+						<span>Login</span>
+						<LoginRed>
+							<Icon className="hgi hgi-stroke hgi-location-01" />
+						</LoginRed>
+					</LoginPink>
+				</LoginWrapper>
             </div>
         </Fragment>
     );
