@@ -1,29 +1,32 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 	:root {
-	--color-neutral-light: rgba(255, 255, 255, 0.904);
-	--color-neutral-dark: rgba(0, 0, 0, 0.897);
+	--color-neutral-light: #FFFFFF;
+	--color-neutral-dark: #333333;
+	--color-neutral-grey: #CCCCCC;
 	
-	--color-background: #F5F1E7;
-	--color-secondary: #8B5E3C;
-	--color-primary: #BFA58A;
-	--color-accent: #3B3A30;
+	--color-primary-light: #FFC4B2;
+	--color-primary-medium: #FF907C;
+	--color-secodary: #921613;
+	--color-accent: #8ED4C8;
+	--color-accent: #3E6C63;
 	}
 	* {
 	box-sizing: border-box;
 	}  
 	body {
 		margin: 0;
-		background: var(--color-background);
+		background: var(--color-primary-light);
 		color: var(--color-neutral-dark);
 		min-height: 100vh;
 		min-width: 320px;
-		font-family: Playfair Display;
+		font-family: Poppins;
 		font-style: normal;
 	}
 	h1 {
 		color: var(--color-secondary);
+		font-family: Hanayoru;
 		font-size: 36px;
 		font-weight: 400;
 		margin: 10px auto;
@@ -58,6 +61,11 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 16px;
 		font-weight: 600;
 		margin: 16px 0;
+	}
+
+	@font-face {
+  		font-family: Hanayoru;
+  		src: url('src/assets/font/HanayoruDemo.ttf') format('truetype');
 	}
 `;
 
