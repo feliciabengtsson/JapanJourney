@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
 	
 	--color-primary-light: #FFC4B2;
 	--color-primary-medium: #FF907C;
-	--color-secodary: #921613;
+	--color-secondary: #921613;
 	--color-accent: #8ED4C8;
 	--color-accent: #3E6C63;
 	}
@@ -27,19 +27,19 @@ const GlobalStyle = createGlobalStyle`
 		font-style: normal;
 	}
 	h1 {
-		color: var(--color-secondary);
+		color: var(--color-neutral-dark);
 		font-family: Hanayoru;
 		font-size: 36px;
 		font-weight: 400;
 		margin: 10px auto;
 	}
 	h2 {
-		color: var(--color-secondary);
+		color: var(--color-neutral-dark);
 		font-size: 24px;
 		font-weight: 400;
 	}
 	h3 {
-		color: var(--color-secondary);
+		color: var(--color-neutral-dark);
 		font-size: 16px;
 		font-weight: 600;
 	}
@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 16px;
 		font-weight: 400;
 	}
-	span {
+/* 	span {
 		color: var(--color-neutral-light);
 		&:hover {
 			color: var(--color-accent) !important;
@@ -56,14 +56,14 @@ const GlobalStyle = createGlobalStyle`
 		&:visited {
 			color: var(--color-secondary) !important;
 		} 
-	}
-	label {
+	} */
+/* 	label {
 		display: block;
 		color: var(--color-secondary);
 		font-size: 16px;
 		font-weight: 600;
 		margin: 16px 0;
-	}
+	} */
 
 	@font-face {
   		font-family: Hanayoru;

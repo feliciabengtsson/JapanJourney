@@ -2,34 +2,59 @@ import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 
 const DivHeader = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	padding-top: 3rem;
+    position: absolute;
+    left: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 3rem;
+`;
+const IconWrapper = styled.div`
+    margin-left: -1.8rem;
+	margin-bottom: -.7rem;
 `;
 const Icon = styled.i`
-	display: block;
-	font-size: 4rem;
-	font-weight: 800;
+    font-size: 4rem;
+    font-weight: 800;
 `;
 const TitleWrapper = styled.div`
-	width: 6rem;
+    width: 6rem;
 `;
 const LoginWrapper = styled.div`
-	position: absolute;
-	bottom: 15rem;
+    display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 const LoginPink = styled.div`
-	width: 248px;
-	height: 76px;
-	border-radius: 50px;
-	background: rgba(255, 144, 124, 0.68);
+    position: absolute;
+    bottom: 5.3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: 5rem;
+    border-radius: 3rem;
+    background: rgba(255, 144, 124, 0.68);
+    margin: auto;
+`;
+const LoginText = styled.h2`
+	margin-left: 2rem;
+	font-weight: 500;
 `;
 const LoginRed = styled.div`
-	width: 86px;
-	height: 66px;
-	border-radius: 50px;
-	background: var(--color-secondary);
+	position: absolute;
+	bottom: 7.3rem;
+	right: 7rem;
+    width: 5.1rem;
+    height: 4rem;
+    border-radius: 3rem;
+    background: var(--color-secondary);
+	text-align: center;
+`;
+const IconArrow = styled.i`
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-neutral-light);
 `;
 
 function Startview() {
@@ -37,21 +62,21 @@ function Startview() {
         <Fragment>
             <div id="main-wrapper">
                 <DivHeader>
-					<div>
-						<Icon className="hgi hgi-stroke hgi-location-01" />
-					</div>
+                    <IconWrapper>
+                        <Icon className="hgi hgi-stroke hgi-location-01" />
+                    </IconWrapper>
                     <TitleWrapper>
-						<h1>Japan Journey</h1>
-					</TitleWrapper>
+                        <h1>Japan Journey</h1>
+                    </TitleWrapper>
                 </DivHeader>
-				<LoginWrapper>
-					<LoginPink>
-						<span>Login</span>
-						<LoginRed>
-							<Icon className="hgi hgi-stroke hgi-location-01" />
-						</LoginRed>
-					</LoginPink>
-				</LoginWrapper>
+                <LoginWrapper>
+                    <LoginPink>
+                        <LoginText>Login</LoginText>
+                    </LoginPink>
+                    <LoginRed>
+                        <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                    </LoginRed>
+                </LoginWrapper>
             </div>
         </Fragment>
     );

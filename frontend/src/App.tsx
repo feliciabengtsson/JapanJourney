@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import GlobalStyle from './GlobalStyles';
+import GlobalStyle from './GlobalStyle';
 import { Fragment } from 'react/jsx-runtime';
 
 import { Routes, Route } from 'react-router-dom';
