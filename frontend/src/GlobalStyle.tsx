@@ -48,15 +48,15 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 16px;
 		font-weight: 400;
 	}
-/* 	span {
-		color: var(--color-neutral-light);
+ 	i {
 		&:hover {
 			color: var(--color-accent) !important;
+			cursor: pointer;
 		} 
 		&:visited {
 			color: var(--color-secondary) !important;
 		} 
-	} */
+	}
 /* 	label {
 		display: block;
 		color: var(--color-secondary);

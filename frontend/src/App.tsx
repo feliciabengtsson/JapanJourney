@@ -5,6 +5,8 @@ import { Fragment } from 'react/jsx-runtime';
 import { Routes, Route } from 'react-router-dom';
 
 import StartView from './pages/StartView'
+import Loginview from './pages/LoginView';
+import MainContainer from './components/MainContainer';
 
 const Div = styled.div`
     width: 300px;
@@ -15,10 +17,12 @@ function App() {
     return (
         <Fragment>
             <Div>
-                <Routes>
-                    <Route path="/" element={<StartView />} />
+				<Routes>
+                    <Route path="/" element={<Loginview />} />
+					<Route path="start" element={<StartView />} />
                 </Routes>
             </Div>
+			<MainContainer />
             <GlobalStyle />
         </Fragment>
     );
