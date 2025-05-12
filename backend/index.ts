@@ -16,6 +16,7 @@ interface Book {
     summary: string;
 }
 
+
 const client = new Client({
     connectionString: process.env.PGURI,
 });
