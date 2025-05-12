@@ -57,6 +57,9 @@ const GlobalStyle = createGlobalStyle`
 			color: var(--color-secondary) !important;
 		} 
 	}
+	a {
+		color: var(--color-neutral-light);
+	}
 /* 	label {
 		display: block;
 		color: var(--color-secondary);
