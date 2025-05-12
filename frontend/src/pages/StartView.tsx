@@ -57,6 +57,7 @@ const PlacesContainer = styled.div`
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
 	column-gap: 1rem;
+	margin-top: 2rem;
     @media (min-width: 890px) {
     }
 `;

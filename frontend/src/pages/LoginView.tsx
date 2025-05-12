@@ -45,7 +45,7 @@ const LoginText = styled.h2`
 const LoginRed = styled.div`
     position: absolute;
     bottom: 7.3rem;
-    right: 7rem;
+    right: 6rem;
     width: 5.1rem;
     height: 4rem;
     border-radius: 3rem;
