@@ -9,8 +9,8 @@ const GlobalStyle = createGlobalStyle`
 	--color-primary-light: #FFC4B2;
 	--color-primary-medium: #FF907C;
 	--color-secondary: #921613;
-	--color-accent: #8ED4C8;
-	--color-accent: #3E6C63;
+	--color-accent-light: #8ED4C8;
+	--color-accent-dark: #3E6C63;
 	}
 	* {
 	box-sizing: border-box;
@@ -50,23 +50,16 @@ const GlobalStyle = createGlobalStyle`
 	}
  	i {
 		&:hover {
-			color: var(--color-accent) !important;
+			color: var(--color-accent);
 			cursor: pointer;
 		} 
 		&:visited {
-			color: var(--color-secondary) !important;
+			color: var(--color-secondary);
 		} 
 	}
 	a {
 		color: var(--color-neutral-light);
 	}
-/* 	label {
-		display: block;
-		color: var(--color-secondary);
-		font-size: 16px;
-		font-weight: 600;
-		margin: 16px 0;
-	} */
 
 	@font-face {
   		font-family: Hanayoru;

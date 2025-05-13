@@ -8,13 +8,15 @@ import StartView from "./pages/StartView";
 import Loginview from "./pages/LoginView";
 import MainContainer from "./components/MainContainer";
 import SideNav from "./components/SideNav";
-import useNav from "../src/hooks/useNav";
+import useModal from "./hooks/useModal";
 import { useLocation } from "react-router-dom";
+import ProfileView from "./pages/ProfileView";
+import ReviewsView from "./pages/ReviewsView";
 
-const AppWrapper = styled.div``;
 const Icon = styled.i`
     font-size: 4rem;
     font-weight: 800;
+    cursor: pointer;
 `;
 const IconWrapper = styled.div`
     position: absolute;
@@ -23,7 +25,7 @@ const IconWrapper = styled.div`
 `;
 
 function App() {
-    const { isOpen, toggle } = useNav();
+    const { isOpen, toggle } = useModal();
     const location = useLocation();
     const hideComponent = location.pathname === "/";
 
@@ -36,12 +38,12 @@ function App() {
                 />
             </IconWrapper>
             <SideNav isOpen={isOpen} toggle={toggle} />
-            <AppWrapper>
-                <Routes>
-                    <Route path="/" element={<Loginview />} />
-                    <Route path="start" element={<StartView />} />
-                </Routes>
-            </AppWrapper>
+            <Routes>
+                <Route path="/" element={<Loginview />} />
+                <Route path="start" element={<StartView />} />
+				<Route path="profile" element={<ProfileView/>} />
+				<Route path="reviews" element={<ReviewsView />} />
+            </Routes>
             <MainContainer />
             <GlobalStyle />
         </Fragment>

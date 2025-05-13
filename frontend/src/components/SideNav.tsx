@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const NavWrapper = styled.div`
     width: 85%;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background: var(--color-primary-medium);
@@ -28,6 +28,7 @@ const LogoHeader = styled.div`
 const IconWrapper = styled.div`
     margin-left: -1.8rem;
     margin-bottom: -0.7rem;
+	z-index: 1;
 `;
 const Icon = styled.i`
     font-size: 4rem;
@@ -42,12 +43,14 @@ const LinksWrapper = styled.div`
     width: fit-content;
     margin: 6rem auto;
 `;
-const LinksText = styled.span`
-    font-size: 2rem;
-`;
 const NavLinks = styled(Link)`
-	text-decoration: none;
-	margin-top: 1rem;
+    font-size: 2rem;
+    text-decoration: none;
+    margin-top: 1rem;
+	z-index: 10000;
+    &:hover {
+        color: var(--color-accent-light);
+    }
     @media (min-width: 890px) {
     }
 `;
@@ -89,15 +92,12 @@ function SideNav(props: Nav) {
                         </TitleWrapper>
                     </LogoHeader>
                     <LinksWrapper>
-                        <NavLinks to="start">
-                            <LinksText>Profile</LinksText>
-                        </NavLinks>
-                        <NavLinks to="start">
-                            <LinksText>Reviews</LinksText>
-                        </NavLinks>
+                        <NavLinks to="start" onClick={props.toggle}>Home</NavLinks>
+						<NavLinks to="profile" onClick={props.toggle}>Profile</NavLinks>
+                        <NavLinks to="reviews" onClick={props.toggle}>Reviews</NavLinks>
                         <LogoutWrapper>
-                            <NavLinks to="start">
-                                <LinksText>Logout</LinksText>
+                            <NavLinks to="/" onClick={props.toggle}>
+                                Logout
                                 <Logout className="hgi hgi-stroke hgi-logout-01" />
                             </NavLinks>
                         </LogoutWrapper>
