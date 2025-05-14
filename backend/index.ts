@@ -1,4 +1,5 @@
 /* https://dev.to/achukka/add-postgresql-to-express-server-2f0k */
+/* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe */
 
 import cors from "cors";
 import express, { Request, Response } from "express";
@@ -7,17 +8,6 @@ const dotenv = require("dotenv"),
     { Client } = require("pg");
 
 dotenv.config();
-
-interface Book {
-    find: any;
-    books_id: number;
-    title: string;
-    author: string;
-    genre: string;
-    year: number;
-    cover_url: string;
-    summary: string;
-}
 
 const client = new Client({
     connectionString: process.env.PGURI,
@@ -33,8 +23,38 @@ app.use(express.json());
 
 app.get("/jj/places", async (request, response) => {
     try {
-        const { rows } = await client.query("SELECT * FROM places");
-        response.status(200).send(rows);
+
+        const { region, city, category } = request.query;
+		console.log(region, "region");
+		console.log(city, "city");
+		console.log(category, "category");
+
+        if (region) {
+            const { rows } = await client.query(
+                "SELECT * FROM places WHERE region = $1",
+                [region]
+            );
+            response.status(200).send(rows);
+        }
+        else if (city) {
+            const { rows } = await client.query(
+                "SELECT * FROM places WHERE city = $1",
+                [city]
+            );
+            response.status(200).send(rows);
+        }
+        else if (category) {
+            const { rows } = await client.query(
+                "SELECT * FROM places WHERE category = $1",
+                [category]
+            );
+            response.status(200).send(rows);
+        } else {
+            const { rows } = await client.query("SELECT * FROM places");
+
+            console.log(rows, "places");
+            response.status(200).send(rows);
+        }
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
@@ -67,7 +87,7 @@ app.post("/jj/login", async (request, response) => {
 
     if (!email || !password) {
         response.status(400).send("Bad Request");
-		return
+        return;
     }
 
     try {
@@ -91,14 +111,14 @@ app.post("/jj/signup", async (request, response) => {
 
     if (!username || !email || !password) {
         response.status(400).send("Bad Request");
-		return;
+        return;
     }
 
     try {
         await client.query(
             `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`
         );
-		response.status(200).send("success");
+        response.status(200).send("success");
     } catch (error) {
         console.error(error);
         response.status(500).send("error");

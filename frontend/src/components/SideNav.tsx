@@ -11,7 +11,7 @@ const NavWrapper = styled.div`
     background: var(--color-primary-medium);
     padding: 1rem;
     border-radius: 0 1rem 1rem 0;
-    z-index: 1;
+    z-index: 2;
 `;
 const CloseWrapper = styled.div`
     display: flex;
@@ -28,7 +28,7 @@ const LogoHeader = styled.div`
 const IconWrapper = styled.div`
     margin-left: -1.8rem;
     margin-bottom: -0.7rem;
-	z-index: 1;
+    z-index: 1;
 `;
 const Icon = styled.i`
     font-size: 4rem;
@@ -47,9 +47,9 @@ const NavLinks = styled(Link)`
     font-size: 2rem;
     text-decoration: none;
     margin-top: 1rem;
-	z-index: 10000;
+    z-index: 10000;
     &:hover {
-        color: var(--color-accent-light);
+        color: var(--color-secondary);
     }
     @media (min-width: 890px) {
     }
@@ -63,6 +63,9 @@ const Logout = styled.i`
     font-weight: 700;
     color: var(--color-secondary);
     margin-left: 0.6rem;
+    &:hover {
+        color: var(--color-accent-light);
+    }
 `;
 
 interface Nav {
@@ -92,9 +95,15 @@ function SideNav(props: Nav) {
                         </TitleWrapper>
                     </LogoHeader>
                     <LinksWrapper>
-                        <NavLinks to="start" onClick={props.toggle}>Home</NavLinks>
-						<NavLinks to="profile" onClick={props.toggle}>Profile</NavLinks>
-                        <NavLinks to="reviews" onClick={props.toggle}>Reviews</NavLinks>
+                        <NavLinks to="start" onClick={props.toggle}>
+                            Home
+                        </NavLinks>
+                        <NavLinks to="profile" onClick={props.toggle}>
+                            Profile
+                        </NavLinks>
+                        <NavLinks to="reviews" onClick={props.toggle}>
+                            Reviews
+                        </NavLinks>
                         <LogoutWrapper>
                             <NavLinks to="/" onClick={props.toggle}>
                                 Logout

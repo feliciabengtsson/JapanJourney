@@ -1,5 +1,7 @@
 /* https://stackoverflow.com/questions/59288849/styling-a-router-link-with-styled-components
  */
+/* https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams */
+/* https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c */
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
@@ -35,6 +37,7 @@ const IconSearch = styled.i`
     font-size: 1.5rem;
     font-weight: 800;
     color: var(--color-secondary);
+    cursor: pointer;
 `;
 const FilterWrapper = styled.div`
     display: flex;
@@ -42,38 +45,47 @@ const FilterWrapper = styled.div`
     align-items: center;
     margin: 1rem auto;
 `;
-const Filter = styled.span`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const Filter = styled.select`
+    text-align: center;
     width: 6rem;
     height: 2.3rem;
     border-radius: 50px;
     background: var(--color-neutral-light);
+	color: var(--color-neutral-dark);
+    border: none;
     font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 1;
+`;
+const FilterChoice = styled.option`
+    background: var(--color-primary-light);
+	color: var(--color-neutral-dark);
+    &:hover {
+        background: var(--color-primary-medium);
+    }
 `;
 const PlacesContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
-	column-gap: 1rem;
-	margin-top: 2rem;
+    column-gap: 1rem;
+    margin-top: 2rem;
     @media (min-width: 890px) {
     }
 `;
 const PlacesLink = styled(Link)`
     display: flex;
-	justify-content: space-around;
-	align-items: center;
-	width: 100%;
-	text-decoration: none;
-	color: inherit;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
     @media (min-width: 890px) {
     }
 `;
 const PlacesCard = styled.div`
     display: flex;
-	width: 10rem;
+    width: 10rem;
     height: 4.4rem;
     border-radius: 50px;
     background: var(--color-neutral-light);
@@ -91,13 +103,13 @@ const PlaceImg = styled.img`
     }
 `;
 const DescriptionWrapper = styled.div`
-	width: 5rem;
+    width: 5rem;
     @media (min-width: 890px) {
     }
 `;
 const PlaceName = styled.p`
     font-size: 0.7rem;
-	margin: 0;
+    margin: 0;
     @media (min-width: 890px) {
     }
 `;
@@ -122,49 +134,183 @@ interface PlaceType {
 
 function Startview() {
     const [places, setPlaces] = useState<PlaceType[]>([]);
+    const [search, setSearch] = useState("");
+    const [displayedPlaces, setDisplayedPlaces] = useState(places);
+    const [filteredPlaces, setFilteredPlaces] = useState(places);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [selectedRegion, setSelectedRegion] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:8080/jj/places")
             .then((response) => response.json())
             .then((result) => {
                 console.log(result, "fetched places");
-                setPlaces(result.slice(0, 10));
+                setPlaces(result);
+                setDisplayedPlaces(result.slice(0, 10));
             });
     }, []);
+
+    const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (
+        event
+    ) => {
+        const searchInput = event.target.value;
+        setSearch(searchInput);
+
+        const filteredSearch = places.filter((place) =>
+            place.name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        console.log(searchInput, "searched places");
+        setFilteredPlaces(filteredSearch);
+    };
+
+    const handleFilter: React.ChangeEventHandler<HTMLSelectElement> = (
+        event
+    ) => {
+        const { name, value } = event.target;
+        console.log(name, "name", value, "value");
+
+        const queryParams = new URLSearchParams();
+
+        if (name === "selectedRegion") {
+            setSelectedRegion(value);
+            queryParams.append("region", value);
+        }
+        if (name === "selectedCity") {
+            setSelectedCity(value);
+            queryParams.append("city", value);
+        }
+        if (name === "selectedCategory") {
+            setSelectedCategory(value);
+            queryParams.append("category", value);
+        }
+
+        fetch(`http://localhost:8080/jj/places?${queryParams}`)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result, "new fetch");
+                setFilteredPlaces(result);
+            });
+    };
 
     return (
         <Fragment>
             <MainContainer>
                 <MainWrapper>
                     <SearchWrapper>
-                        <label htmlFor=""></label>
+                        <label htmlFor="search"></label>
                         <InputSearch
+                            value={search}
+                            onChange={onChangeHandler}
                             type="text"
+                            name="search"
                             placeholder="Search city or place"
                         />
                         <IconSearch className="hgi hgi-stroke hgi-sharp hgi-search-01" />
                     </SearchWrapper>
                     <FilterWrapper>
-                        <Filter>Regions</Filter>
-                        <Filter>Cities</Filter>
-                        <Filter>Categories</Filter>
+                        <label htmlFor="selectedRegion" />
+                        <Filter
+                            onChange={handleFilter}
+                            name="selectedRegion"
+                            value={selectedRegion}
+                        >
+                            <FilterChoice value="Regions">Regions</FilterChoice>
+                            <FilterChoice value="Chubu">Chubu</FilterChoice>
+                            <FilterChoice value="Chugoku">Chugoku</FilterChoice>
+                            <FilterChoice value="Hokkaido">
+                                Hokkaido
+                            </FilterChoice>
+                            <FilterChoice value="Kansai">Kansai</FilterChoice>
+                            <FilterChoice value="Kanto">Kanto</FilterChoice>
+                            <FilterChoice value="Kyushu">Kyushu</FilterChoice>
+                        </Filter>
+                        <label htmlFor="selectedCity" />
+                        <Filter
+                            onChange={handleFilter}
+                            name="selectedCity"
+                            value={selectedCity}
+                        >
+                            <FilterChoice value="Cities">Cities</FilterChoice>
+                            <FilterChoice value="Beppu">Beppu</FilterChoice>
+                            <FilterChoice value="Fujinomiya">
+                                Fujinomiya
+                            </FilterChoice>
+                            <FilterChoice value="Fukuoka">Fukuoka</FilterChoice>
+                            <FilterChoice value="Hakone">Hakone</FilterChoice>
+                            <FilterChoice value="Hatsukaichi">
+                                Hatsukaichi
+                            </FilterChoice>
+                            <FilterChoice value="Himeji">Himeji</FilterChoice>
+                            <FilterChoice value="Kyoto">Kyoto</FilterChoice>
+                            <FilterChoice value="Mitaka">Mitaka</FilterChoice>
+                            <FilterChoice value="Nikko">Nikko</FilterChoice>
+                            <FilterChoice value="Osaka">Osaka</FilterChoice>
+                            <FilterChoice value="Sapporo">Sapporo</FilterChoice>
+                            <FilterChoice value="Tokyo">Tokyo</FilterChoice>
+                        </Filter>
+                        <label htmlFor="selectedCategory" />
+                        <Filter
+                            onChange={handleFilter}
+                            name="selectedCategory"
+                            value={selectedCategory}
+                        >
+                            <FilterChoice value="Categories">
+                                Categories
+                            </FilterChoice>
+                            <FilterChoice value="Anime">Anime</FilterChoice>
+                            <FilterChoice value="Culture">Culture</FilterChoice>
+                            <FilterChoice value="Events">Events</FilterChoice>
+                            <FilterChoice value="Food">Food</FilterChoice>
+                            <FilterChoice value="History">History</FilterChoice>
+                            <FilterChoice value="Nature">Nature</FilterChoice>
+                            <FilterChoice value="Relaxation">
+                                Relaxation
+                            </FilterChoice>
+                            <FilterChoice value="Shopping">
+                                Shopping
+                            </FilterChoice>
+                        </Filter>
                     </FilterWrapper>
-                    <PlacesContainer>
-                        {places.map((place) => (
-                            <PlacesCard key={place.places_id}>
-                                <PlacesLink to={`/books/${place.places_id}`}>
-                                    <PlaceImg
-                                        src={place.image_url}
-                                        alt="Place image"
-                                    />
-                                    <DescriptionWrapper>
-                                        <PlaceName>{place.name}</PlaceName>
-                                        <PlaceRating>OOOOO</PlaceRating>
-                                    </DescriptionWrapper>
-                                </PlacesLink>
-                            </PlacesCard>
-                        ))}
-                    </PlacesContainer>
+                    {filteredPlaces.length > 0 ? (
+                        <PlacesContainer>
+                            {filteredPlaces.map((place) => (
+                                <PlacesCard key={place.places_id}>
+                                    <PlacesLink
+                                        to={`/jj/places/${place.places_id}`}
+                                    >
+                                        <PlaceImg
+                                            src={place.image_url}
+                                            alt="Place image"
+                                        />
+                                        <DescriptionWrapper>
+                                            <PlaceName>{place.name}</PlaceName>
+                                            <PlaceRating>OOOOO</PlaceRating>
+                                        </DescriptionWrapper>
+                                    </PlacesLink>
+                                </PlacesCard>
+                            ))}
+                        </PlacesContainer>
+                    ) : (
+                        <PlacesContainer>
+                            {displayedPlaces.map((place) => (
+                                <PlacesCard key={place.places_id}>
+                                    <PlacesLink
+                                        to={`/jj/places/${place.places_id}`}
+                                    >
+                                        <PlaceImg
+                                            src={place.image_url}
+                                            alt="Place image"
+                                        />
+                                        <DescriptionWrapper>
+                                            <PlaceName>{place.name}</PlaceName>
+                                            <PlaceRating>OOOOO</PlaceRating>
+                                        </DescriptionWrapper>
+                                    </PlacesLink>
+                                </PlacesCard>
+                            ))}
+                        </PlacesContainer>
+                    )}
                 </MainWrapper>
             </MainContainer>
         </Fragment>
