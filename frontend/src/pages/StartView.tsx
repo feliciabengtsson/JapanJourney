@@ -53,7 +53,7 @@ const Filter = styled.select`
     height: 2.3rem;
     border-radius: 50px;
     background: var(--color-neutral-light);
-	color: var(--color-neutral-dark);
+    color: var(--color-neutral-dark);
     border: none;
     font-size: 0.9rem;
     cursor: pointer;
@@ -61,7 +61,7 @@ const Filter = styled.select`
 `;
 const FilterChoice = styled.option`
     background: var(--color-primary-light);
-	color: var(--color-neutral-dark);
+    color: var(--color-neutral-dark);
     &:hover {
         background: var(--color-primary-medium);
     }
@@ -116,7 +116,7 @@ const PlaceName = styled.p`
     }
 `;
 const PlaceRating = styled.span`
-    font-size: 0.7rem;
+    margin: 0 auto;
     @media (min-width: 890px) {
     }
 `;
@@ -144,23 +144,53 @@ function Startview() {
     const [selectedRegion, setSelectedRegion] = useState("");
 
     const renderCircles = (rating: number) => {
-		const circles = [];
-		const fullCircle = Math.floor(rating)
-		const halfCircle = rating % 1 >= 0.5;
+        const circles = [];
+        const fullCircle = Math.floor(rating);
+        const halfCircle = rating % 1 >= 0.5;
 
-		for (let i = 0; i < fullCircle; i++) {
-			circles.push(<i key={`full${i}`} className="fa-solid fa-circle"></i>)
-		}
-		if (halfCircle) {
-			circles.push(<i key='half' className="fa-solid fa-circle-half-stroke"></i>)
-		}
-		while (circles.length < 5) {
-			circles.push(<i key='empty' className="fa-regular fa-circle"></i>)
-		}
+        for (let i = 0; i < fullCircle; i++) {
+            circles.push(
+                <i
+                    style={{
+                        fontSize: ".5rem",
+                        margin: "0 .1em",
+                        color: "var(--color-secondary)",
+                    }}
+                    key={`full${i}`}
+                    className="fa-solid fa-circle"
+                ></i>
+            );
+        }
+        if (halfCircle) {
+            circles.push(
+                <i
+                    style={{
+                        fontSize: ".5rem",
+                        margin: "0 .1em",
+                        color: "var(--color-secondary)",
+                    }}
+                    key="half"
+                    className="fa-solid fa-circle-half-stroke"
+                ></i>
+            );
+        }
+        while (circles.length < 5) {
+            circles.push(
+                <i
+                    style={{
+                        fontSize: ".5rem",
+                        margin: "0 .1em",
+                        color: "var(--color-secondary)",
+                    }}
+                    key="empty"
+                    className="fa-regular fa-circle"
+                ></i>
+            );
+        }
 
-		console.log('rendered circles', rating, circles)
-		return circles
-	}
+        console.log("rendered circles", rating, circles);
+        return circles;
+    };
 
     useEffect(() => {
         fetch("http://localhost:8080/jj/places")
@@ -307,8 +337,10 @@ function Startview() {
                                         <DescriptionWrapper>
                                             <PlaceName>{place.name}</PlaceName>
                                             <PlaceRating>
-												{renderCircles(place.avg_rating)} {place.avg_rating.toFixed(1)}
-											</PlaceRating>
+                                                {renderCircles(
+                                                    place.avg_rating
+                                                )}
+                                            </PlaceRating>
                                         </DescriptionWrapper>
                                     </PlacesLink>
                                 </PlacesCard>
@@ -328,9 +360,10 @@ function Startview() {
                                         <DescriptionWrapper>
                                             <PlaceName>{place.name}</PlaceName>
                                             <PlaceRating>
-												<span>{renderCircles(place.avg_rating)}</span>
-												<span>{place.avg_rating}</span>
-											</PlaceRating>
+                                                {renderCircles(
+                                                    place.avg_rating
+                                                )}
+                                            </PlaceRating>
                                         </DescriptionWrapper>
                                     </PlacesLink>
                                 </PlacesCard>
