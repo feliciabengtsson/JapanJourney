@@ -2,6 +2,8 @@
  */
 /* https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams */
 /* https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c */
+/* https://stackoverflow.com/questions/62265072/how-can-i-fill-review-icons-depending-on-average-rating
+https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f */
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
@@ -140,6 +142,25 @@ function Startview() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
+
+    const renderCircles = (rating: number) => {
+		const circles = [];
+		const fullCircle = Math.floor(rating)
+		const halfCircle = rating % 1 >= 0.5;
+
+		for (let i = 0; i < fullCircle; i++) {
+			circles.push(<i key={`full${i}`} className="fa-solid fa-circle"></i>)
+		}
+		if (halfCircle) {
+			circles.push(<i key='half' className="fa-solid fa-circle-half-stroke"></i>)
+		}
+		while (circles.length < 5) {
+			circles.push(<i key='empty' className="fa-regular fa-circle"></i>)
+		}
+
+		console.log('rendered circles', rating, circles)
+		return circles
+	}
 
     useEffect(() => {
         fetch("http://localhost:8080/jj/places")
@@ -285,7 +306,9 @@ function Startview() {
                                         />
                                         <DescriptionWrapper>
                                             <PlaceName>{place.name}</PlaceName>
-                                            <PlaceRating>OOOOO</PlaceRating>
+                                            <PlaceRating>
+												{renderCircles(place.avg_rating)} {place.avg_rating.toFixed(1)}
+											</PlaceRating>
                                         </DescriptionWrapper>
                                     </PlacesLink>
                                 </PlacesCard>
@@ -304,7 +327,10 @@ function Startview() {
                                         />
                                         <DescriptionWrapper>
                                             <PlaceName>{place.name}</PlaceName>
-                                            <PlaceRating>OOOOO</PlaceRating>
+                                            <PlaceRating>
+												<span>{renderCircles(place.avg_rating)}</span>
+												<span>{place.avg_rating}</span>
+											</PlaceRating>
                                         </DescriptionWrapper>
                                     </PlacesLink>
                                 </PlacesCard>
