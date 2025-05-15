@@ -107,7 +107,7 @@ function LoginModal(props: Login) {
             console.log(response, "sent to backend");
 
             if (response.ok) {
-                navigate("/start"); // Redirect to new page
+                navigate("/places"); // Redirect to new page
             } else {
                 console.log("fel inlogg)");
 				setLoginInfo(true)

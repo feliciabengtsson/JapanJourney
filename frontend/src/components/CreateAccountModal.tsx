@@ -108,7 +108,7 @@ function CreateAccountModal(props: Signup) {
             console.log(response, "sent to backend");
 
             if (response.ok) {
-                navigate("/start"); // Redirect to new page
+                navigate("/places"); // Redirect to new page
             } else if (formData.email === "" || formData.username === "") {
                 console.log("behövs email och username");
             } else {

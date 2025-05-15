@@ -23,11 +23,10 @@ app.use(express.json());
 
 app.get("/jj/places", async (request, response) => {
     try {
-
         const { region, city, category } = request.query;
-		console.log(region, "region");
-		console.log(city, "city");
-		console.log(category, "category");
+        console.log(region, "region");
+        console.log(city, "city");
+        console.log(category, "category");
 
         if (region) {
             const { rows } = await client.query(
@@ -35,15 +34,13 @@ app.get("/jj/places", async (request, response) => {
                 [region]
             );
             response.status(200).send(rows);
-        }
-        else if (city) {
+        } else if (city) {
             const { rows } = await client.query(
                 "SELECT * FROM places WHERE city = $1",
                 [city]
             );
             response.status(200).send(rows);
-        }
-        else if (category) {
+        } else if (category) {
             const { rows } = await client.query(
                 "SELECT * FROM places WHERE category = $1",
                 [category]
@@ -61,15 +58,20 @@ app.get("/jj/places", async (request, response) => {
     }
 });
 app.get("/jj/places/:id", async (request, response) => {
-    console.log("test");
-    response.send("ok");
+    try {
+        const placeId = request.params.id;
 
-    /* const { rows } = await client.query(
-      'SELECT * FROM cities WHERE name = $1',
-      ['Stockholm']
-    )
-  
-    response.send(rows) */
+        const { rows } = await client.query(
+            "SELECT * FROM places WHERE places_id = $1",
+            [placeId]
+        );
+		console.log(rows, "placeId");
+
+        response.status(200).send(rows[0]);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
 });
 app.get("/jj/places/:id/category", async (request, response) => {
     console.log("test");

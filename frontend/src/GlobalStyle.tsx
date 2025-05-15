@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 	}  
 	body {
 		margin: 0;
-		background-image: url('src/assets/images/background-sm.jpg');
+		background: url('src/assets/images/background-sm.jpg');
 		background-size: cover;
 		background-position: center;
 		color: var(--color-neutral-dark);

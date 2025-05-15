@@ -3,7 +3,12 @@
 /* https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams */
 /* https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c */
 /* https://stackoverflow.com/questions/62265072/how-can-i-fill-review-icons-depending-on-average-rating
-https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f */
+https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f 
+https://www.npmjs.com/package/react-rating-stars-component
+https://stackoverflow.com/questions/74138879/how-to-render-elements-based-on-a-given-value-in-react-js
+https://stackoverflow.com/questions/71023164/how-to-show-stars-based-on-user-rating
+https://blog.petefowler.dev/how-to-make-a-star-rating-display-in-react-thats-better-than-the-one-on-yelpcom*/
+
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
@@ -145,8 +150,8 @@ function Startview() {
 
     const renderCircles = (rating: number) => {
         const circles = [];
-        const fullCircle = Math.floor(rating);
-        const halfCircle = rating % 1 >= 0.5;
+        const fullCircle = Math.floor(rating); //gets rating number rounded down
+        const halfCircle = rating % 1 >= 0.5; //calculate if there is half a number/rating left, true or false
 
         for (let i = 0; i < fullCircle; i++) {
             circles.push(
@@ -174,6 +179,7 @@ function Startview() {
                 ></i>
             );
         }
+		//make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(
                 <i
@@ -187,8 +193,6 @@ function Startview() {
                 ></i>
             );
         }
-
-        console.log("rendered circles", rating, circles);
         return circles;
     };
 
@@ -328,7 +332,7 @@ function Startview() {
                             {filteredPlaces.map((place) => (
                                 <PlacesCard key={place.places_id}>
                                     <PlacesLink
-                                        to={`/jj/places/${place.places_id}`}
+                                        to={`/places/${place.places_id}`}
                                     >
                                         <PlaceImg
                                             src={place.image_url}
@@ -351,7 +355,7 @@ function Startview() {
                             {displayedPlaces.map((place) => (
                                 <PlacesCard key={place.places_id}>
                                     <PlacesLink
-                                        to={`/jj/places/${place.places_id}`}
+                                        to={`/places/${place.places_id}`}
                                     >
                                         <PlaceImg
                                             src={place.image_url}
