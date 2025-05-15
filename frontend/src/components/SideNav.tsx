@@ -95,7 +95,7 @@ function SideNav(props: Nav) {
                         </TitleWrapper>
                     </LogoHeader>
                     <LinksWrapper>
-                        <NavLinks to="start" onClick={props.toggle}>
+                        <NavLinks to="places" onClick={props.toggle}>
                             Home
                         </NavLinks>
                         <NavLinks to="profile" onClick={props.toggle}>

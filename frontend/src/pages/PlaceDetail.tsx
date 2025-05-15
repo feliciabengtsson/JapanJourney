@@ -15,10 +15,12 @@ const Header = styled.h2`
 `;
 const PlaceImg = styled.img`
     width: 100vw;
+	max-height: 35vh;
+	object-fit: cover;
     border-radius: 2rem 2rem 5rem 5rem;
 `;
 const ContentContainer = styled.div`
-    width: 70vw;
+    width: 80vw;
     margin: auto;
 `;
 const ContentWrapper = styled.div`
@@ -97,6 +99,8 @@ function PlaceDetail() {
                 ></i>
             );
         }
+
+		console.log(circles, 'circles')
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(
@@ -106,7 +110,6 @@ function PlaceDetail() {
                         margin: "0 .1em",
                         color: "var(--color-secondary)",
                     }}
-                    key="empty"
                     className="fa-regular fa-circle"
                 ></i>
             );
