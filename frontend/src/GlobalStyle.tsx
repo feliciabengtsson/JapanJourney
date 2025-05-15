@@ -36,6 +36,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 	h2 {
 		color: var(--color-neutral-dark);
+		font-family: Hanayoru;
 		font-size: 24px;
 		font-weight: 400;
 	}

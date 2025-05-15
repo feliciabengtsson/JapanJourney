@@ -8,7 +8,7 @@ const MainDiv = styled.div`
     position: fixed;
     bottom: 0;
     width: 100vw;
-	height: 85vh;
+    height: 85vh;
     border-radius: 2rem 2rem 0px 0px;
     background: rgba(255, 196, 178, 0.61);
     z-index: -1;
@@ -17,16 +17,26 @@ const MainDiv = styled.div`
 function MainContainer() {
     const location = useLocation();
     const hideComponent = location.pathname === "/";
-    const small = matchPath("/places/:id", location.pathname)
+    const small = matchPath("/profile", location.pathname);
+    const medium = matchPath("/places/:id", location.pathname);
 
     return (
         <Fragment>
-            <MainDiv
-                style={{
-                    display: hideComponent ? "none" : "block",
-                    height: small ? "65vh" : "85vh",
-                }}
-            ></MainDiv>
+            {small ? (
+                <MainDiv
+                    style={{
+                        display: hideComponent ? "none" : "block",
+                        height: small ? "58vh" : "85vh",
+                    }}
+                ></MainDiv>
+            ) : (
+                <MainDiv
+                    style={{
+                        display: hideComponent ? "none" : "block",
+                        height: medium ? "65vh" : "85vh",
+                    }}
+                ></MainDiv>
+            )}
         </Fragment>
     );
 }
