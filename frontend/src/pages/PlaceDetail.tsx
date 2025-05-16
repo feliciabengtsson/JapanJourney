@@ -11,12 +11,12 @@ const Detailswrapper = styled.div`
 `;
 const Header = styled.h2`
     font-size: 2.4rem;
-	margin: 0 1.4rem 0;
+    margin: 0 1.4rem 0;
 `;
 const PlaceImg = styled.img`
     width: 100vw;
-	max-height: 35vh;
-	object-fit: cover;
+    max-height: 35vh;
+    object-fit: cover;
     border-radius: 2rem 2rem 5rem 5rem;
 `;
 const ContentContainer = styled.div`
@@ -100,7 +100,7 @@ function PlaceDetail() {
             );
         }
 
-		console.log(circles, 'circles')
+        console.log(circles, "circles");
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(
@@ -119,7 +119,10 @@ function PlaceDetail() {
 
     useEffect(() => {
         if (placeId !== undefined) {
-            fetch(`http://localhost:8080/jj/places/${placeId}`)
+            fetch(`http://localhost:8080/jj/places/${placeId}`, {
+                method: "GET",
+                credentials: "include",
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     setPlace(data);

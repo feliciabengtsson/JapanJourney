@@ -1,8 +1,12 @@
 /* https://dev.to/achukka/add-postgresql-to-express-server-2f0k */
-/* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe */
+/* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe 
+https://dev.to/alexmercedcoder/expressjs-handling-cross-origin-cookies-38l9
+https://www.postgresql.org/docs/current/tutorial-join.html*/
 
 import cors from "cors";
 import express, { Request, Response } from "express";
+import { v4 as uuidv4 } from "uuid";
+import cookieParser from "cookie-parser";
 import { request } from "http";
 const dotenv = require("dotenv"),
     { Client } = require("pg");
@@ -18,15 +22,18 @@ client.connect();
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+);
 app.use(express.json());
+app.use(cookieParser());
 
-app.get("/jj/places", async (request, response) => {
+app.get("/jj/places", async (request: Request, response: Response) => {
     try {
         const { region, city, category } = request.query;
-        console.log(region, "region");
-        console.log(city, "city");
-        console.log(category, "category");
 
         if (region) {
             const { rows } = await client.query(
@@ -48,8 +55,6 @@ app.get("/jj/places", async (request, response) => {
             response.status(200).send(rows);
         } else {
             const { rows } = await client.query("SELECT * FROM places");
-
-            console.log(rows, "places");
             response.status(200).send(rows);
         }
     } catch (error) {
@@ -57,7 +62,7 @@ app.get("/jj/places", async (request, response) => {
         response.status(500).send("error");
     }
 });
-app.get("/jj/places/:id", async (request, response) => {
+app.get("/jj/places/:id", async (request: Request, response: Response) => {
     try {
         const placeId = request.params.id;
 
@@ -65,7 +70,7 @@ app.get("/jj/places/:id", async (request, response) => {
             "SELECT * FROM places WHERE places_id = $1",
             [placeId]
         );
-		console.log(rows, "placeId");
+        console.log(rows, "placeId");
 
         response.status(200).send(rows[0]);
     } catch (error) {
@@ -73,18 +78,39 @@ app.get("/jj/places/:id", async (request, response) => {
         response.status(500).send("error");
     }
 });
-app.get("/jj/places/:id/category", async (request, response) => {
-    console.log("test");
-    response.send("ok");
+app.get(
+    "/jj/places/:id/category",
+    async (request: Request, response: Response) => {
+        console.log("test");
+        response.send("ok");
 
-    /* const { rows } = await client.query(
+        /* const { rows } = await client.query(
       'SELECT * FROM cities WHERE name = $1',
       ['Stockholm']
     )
   
     response.send(rows) */
+    }
+);
+app.get("/jj/profile", async (request: Request, response: Response) => {
+    const token = request.cookies.token;
+    if (!token) {
+        response.status(401).send("Unauthorized");
+        return;
+    }
+
+    try {
+        const { rows } = await client.query(
+            "SELECT * FROM users JOIN tokens ON users.users_id = tokens.user_id WHERE tokens.token = $1",
+            [token]
+        );
+        response.status(200).send(rows[0]);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
 });
-app.post("/jj/login", async (request, response) => {
+app.post("/jj/login", async (request: Request, response: Response) => {
     const { email, password } = request.body;
 
     if (!email || !password) {
@@ -93,22 +119,33 @@ app.post("/jj/login", async (request, response) => {
     }
 
     try {
-        const user = await client.query(
+        const userSearch = await client.query(
             "SELECT * FROM users WHERE email = $1 AND password = $2",
             [email, password]
         );
+        const user = userSearch.rows[0];
+        console.log(user.users_id, "user.id");
 
-        if (user.rows.length > 0) {
-            response.status(200).send("success");
-        } else {
+        if (!user) {
             response.status(401).send("Unauthorized");
+            return;
         }
+
+        const token = uuidv4();
+        await client.query(
+            "INSERT INTO tokens (user_id, token) VALUES ($1, $2)",
+            [user.users_id, token]
+        );
+        console.log(token, "token har lagts till");
+
+        response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
+        response.status(200).send("token");
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
     }
 });
-app.post("/jj/signup", async (request, response) => {
+app.post("/jj/signup", async (request: Request, response: Response) => {
     const { username, email, password } = request.body;
 
     if (!username || !email || !password) {
@@ -118,12 +155,36 @@ app.post("/jj/signup", async (request, response) => {
 
     try {
         await client.query(
-            `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`
+            "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
+            [username, email, password]
         );
-        response.status(200).send("success");
+        response.status(201).send("success");
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
+    }
+});
+app.post("/jj/logout", async (request: Request, response: Response) => {
+    const token = request.cookies.token;
+    if (token) {
+        const findToken = await client.query(
+            "SELECT * FROM tokens WHERE token = $1",
+            [token]
+        );
+        console.log(token, "found token account");
+
+        if (findToken.rows.length > 0) {
+            const logout = await client.query(
+                "DELETE FROM tokens WHERE token = $1",
+                [token]
+            );
+            response.clearCookie("token");
+            response.send("logged out");
+        } else {
+            response.status(401).send("Unauthorized");
+        }
+    } else {
+        response.status(401).send("Unauthorized");
     }
 });
 

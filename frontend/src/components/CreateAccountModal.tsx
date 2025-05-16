@@ -99,6 +99,7 @@ function CreateAccountModal(props: Signup) {
         try {
             const response = await fetch("http://localhost:8080/jj/signup", {
                 method: "POST",
+				credentials: 'include',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -108,7 +109,7 @@ function CreateAccountModal(props: Signup) {
             console.log(response, "sent to backend");
 
             if (response.ok) {
-                navigate("/places"); // Redirect to new page
+                navigate("/"); // Redirect to new page
             } else if (formData.email === "" || formData.username === "") {
                 console.log("behövs email och username");
             } else {
@@ -164,7 +165,7 @@ function CreateAccountModal(props: Signup) {
                             ) : (
                                 <p></p>
                             )}
-                            <LoginBtn type="submit" value="Signup" />
+                            <LoginBtn onClick={props.toggleSignup} type="submit" value="Signup" />
                         </Form>
                     </ModalWrapper>
                 </ModalContainer>

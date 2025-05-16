@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS tokens;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS favourites;
 DROP TABLE IF EXISTS places;
@@ -9,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
 	email TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS places (
 	places_id serial PRIMARY KEY,
 	name TEXT UNIQUE NOT NULL,
@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS places (
 	lat REAL,
 	lon REAL
 );
-
 CREATE TABLE IF NOT EXISTS reviews (
 	reviews_id serial,
 	user_id INTEGER,
@@ -34,7 +33,6 @@ CREATE TABLE IF NOT EXISTS reviews (
 	FOREIGN KEY(user_id) REFERENCES users(users_id),
 	FOREIGN KEY(place_id) REFERENCES places(places_id)
 );
-
 CREATE TABLE IF NOT EXISTS favourites (
 	user_id INTEGER,
 	place_id INTEGER,
@@ -42,6 +40,11 @@ CREATE TABLE IF NOT EXISTS favourites (
 	FOREIGN KEY(user_id) REFERENCES users(users_id),
 	FOREIGN KEY(place_id) REFERENCES places(places_id)
 );
+CREATE TABLE IF NOT EXISTS tokens (
+	user_id INTEGER, 
+	token TEXT UNIQUE NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(users_id)
+); 
 
 INSERT INTO users (username, email, password) 
 VALUES 

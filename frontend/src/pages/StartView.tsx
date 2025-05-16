@@ -179,7 +179,7 @@ function Startview() {
                 ></i>
             );
         }
-		//make sure there is empty circles filled up if the rating is low
+        //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(
                 <i
@@ -197,7 +197,10 @@ function Startview() {
     };
 
     useEffect(() => {
-        fetch("http://localhost:8080/jj/places")
+        fetch("http://localhost:8080/jj/places", {
+            method: "GET",
+            credentials: "include",
+        })
             .then((response) => response.json())
             .then((result) => {
                 console.log(result, "fetched places");
@@ -240,7 +243,10 @@ function Startview() {
             queryParams.append("category", value);
         }
 
-        fetch(`http://localhost:8080/jj/places?${queryParams}`)
+        fetch(`http://localhost:8080/jj/places?${queryParams}`, {
+            method: "GET",
+            credentials: "include",
+        })
             .then((response) => response.json())
             .then((result) => {
                 console.log(result, "new fetch");

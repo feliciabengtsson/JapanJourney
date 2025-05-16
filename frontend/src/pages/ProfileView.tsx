@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
+import { useEffect, useState } from "react";
+
+import favouriteImg from '../assets/images/favourite-placeholder.jpg'
 
 const ProfileContainer = styled.div`
     width: 100vw;
@@ -17,7 +20,7 @@ const Profilewrapper = styled.div`
     align-items: center;
     justify-content: space-evenly;
 `;
-const ContentCard = styled.div`
+const ContentCard = styled.div<{ favouriteImg: string }>`
     position: relative;
     display: flex;
     justify-content: center;
@@ -25,7 +28,7 @@ const ContentCard = styled.div`
     width: 75vw;
     height: 20vh;
     border-radius: 1rem;
-    background-color: aliceblue;
+    background: url(${(props) => props.bgImg});
     margin: 2rem auto;
 `;
 const ProfileWhite = styled.div`
@@ -46,8 +49,8 @@ const ProfileText = styled.h3`
 `;
 const ProfileRed = styled.div`
     position: absolute;
-	bottom: 0;
-	right: 3.5rem;
+    bottom: 0;
+    right: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,30 +67,53 @@ const IconArrow = styled.i`
     color: var(--color-neutral-light);
 `;
 
+interface User {
+    users_id: number;
+    username: string;
+    email: string;
+}
+
 function ProfileView() {
+    const [user, setUser] = useState<User>();
+
+    useEffect(() => {
+        fetch("http://localhost:8080/jj/profile", {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result, "fetched user");
+                setUser(result);
+            });
+    }, []);
+
     return (
         <Fragment>
-            <ProfileContainer>
-                <Header>Profile</Header>
-                <Profilewrapper>
-                    <ContentCard>
-                        <ProfileWhite>
-                            <ProfileText>Favourites</ProfileText>
-                        </ProfileWhite>
-                        <ProfileRed>
-                            <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
-                        </ProfileRed>
-                    </ContentCard>
-                    <ContentCard>
-                        <ProfileWhite>
-                            <ProfileText>Reviews</ProfileText>
-                        </ProfileWhite>
-                        <ProfileRed>
-                            <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
-                        </ProfileRed>
-                    </ContentCard>
-                </Profilewrapper>
-            </ProfileContainer>
+            {user && (
+                <ProfileContainer>
+                    <Header>{user.username}</Header>
+                    <Profilewrapper>
+                        <ContentCard bgImg={favouriteImg}>
+                            <ProfileWhite>
+                                <ProfileText>Favourites</ProfileText>
+                            </ProfileWhite>
+                            <ProfileRed>
+                                <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                            </ProfileRed>
+                        </ContentCard>
+                        <ContentCard bgImg={favouriteImg}>
+                            <ProfileWhite>
+                                <ProfileText>Reviews</ProfileText>
+                            </ProfileWhite>
+                            <ProfileRed>
+                                <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                            </ProfileRed>
+                        </ContentCard>
+                        ;
+                    </Profilewrapper>
+                </ProfileContainer>
+            )}
         </Fragment>
     );
 }

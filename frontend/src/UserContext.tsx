@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 interface User {
     users_id: number;
@@ -15,7 +15,7 @@ interface UserContext {
 
 const UserContext = createContext<UserContext>({
     user: [],
-    setUser: () => {}
+    setUser: () => {},
 });
 
 export default UserContext;

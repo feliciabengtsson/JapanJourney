@@ -1,3 +1,4 @@
+/* https://stackoverflow.com/questions/34558264/fetch-api-with-cookie */
 import styled from "styled-components";
 import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ const ModalWrapper = styled.div`
     width: 70%;
     max-width: 800px;
     height: fit-content;
-    padding: .5rem 1rem 1rem;
+    padding: 0.5rem 1rem 1rem;
     border-radius: 1rem;
 `;
 const CloseWrapper = styled.div`
@@ -33,8 +34,8 @@ const CloseIcon = styled.span`
 `;
 const LoginHeader = styled.h2`
     display: flex;
-	justify-content: center;
-	margin: 0 auto 1rem;
+    justify-content: center;
+    margin: 0 auto 1rem;
 `;
 const Form = styled.form`
     display: flex;
@@ -62,7 +63,7 @@ const LoginBtn = styled.input`
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-align: center;
-	cursor: pointer;
+    cursor: pointer;
 `;
 
 interface Login {
@@ -75,46 +76,48 @@ interface FormType {
 }
 
 function LoginModal(props: Login) {
-    const [formData, setFormData] = useState<FormType>({
+    const [input, setInput] = useState<FormType>({
         email: "",
         password: "",
     });
-	const [loginInfo, setLoginInfo] = useState(false);
-
+    const [loginInfo, setLoginInfo] = useState(false);
     const navigate = useNavigate();
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-
-        setFormData({
-            ...formData, // Keep existing form data
-            [name]: value, // Update form data for the input field that changed
-        });
-    };
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents default form submission behavior
 
         try {
-            const response = await fetch("http://localhost:8080/jj/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+            if (input.email !== "" && input.password !== "") {
+                const response = await fetch("http://localhost:8080/jj/login", {
+                    method: "POST",
+					credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(input),
+                });
 
-            console.log(response, "sent to backend");
+                console.log(response, "sent to backend");
 
-            if (response.ok) {
-                navigate("/places"); // Redirect to new page
-            } else {
-                console.log("fel inlogg)");
-				setLoginInfo(true)
+                if (response.ok) {
+                    navigate("/places"); // Redirect to new page
+                } else {
+                    console.log("fel inlogg)");
+                    setLoginInfo(true);
+                }
             }
         } catch (error) {
             console.error("error", error);
         }
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+
+        setInput((prev) => ({
+            ...prev, 
+            [name]: value, // Update form data for the input field that changed
+        }));
     };
 
     return (
@@ -130,29 +133,32 @@ function LoginModal(props: Login) {
                                 close
                             </CloseIcon>
                         </CloseWrapper>
-						<LoginHeader>Login</LoginHeader>
-                        <Form onSubmit={handleSubmit} method="post">
-                            <label htmlFor="email">Email:</label>
+                        <LoginHeader>Login</LoginHeader>
+                        <Form onSubmit={handleLogin} method="post">
+                            <label htmlFor="user-email">Email:</label>
                             <LoginInput
-                                value={formData.email}
                                 onChange={handleInputChange}
                                 name="email"
-                                type="text"
-                                placeholder="email"
+                                type="email"
+                                placeholder="name@example.com"
+								aria-describedby="user-email"
+								aria-invalid="false"
                             />
-                            <label htmlFor="password">Password:</label>
+                            <label htmlFor="user-password">Password:</label>
                             <LoginInput
-                                value={formData.password}
+                                value={input.password}
                                 onChange={handleInputChange}
                                 name="password"
                                 type="password"
                                 placeholder="password"
+								aria-describedby="user-password"
+								aria-invalid="false"
                             />
-							{loginInfo ? (
-								<p>Wrong login information!</p>
-							) : (
-								<p></p>
-							)}
+                            {loginInfo ? (
+                                <p>Wrong login information!</p>
+                            ) : (
+                                <p></p>
+                            )}
                             <LoginBtn type="submit" value="Login" />
                         </Form>
                     </ModalWrapper>
