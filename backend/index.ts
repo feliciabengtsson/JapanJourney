@@ -92,6 +92,24 @@ app.get(
     response.send(rows) */
     }
 );
+app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
+    try {
+        const userId = request.params.id;
+
+        const { rows } = await client.query(
+            `SELECT p.* FROM favourites f 
+			JOIN places p ON f.place_id = p.places_id 
+			WHERE f.user_id = $1`,
+            [userId]
+        );
+        console.log(rows, "userId");
+
+        response.status(200).send(rows);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
+});
 app.get("/jj/profile", async (request: Request, response: Response) => {
     const token = request.cookies.token;
     if (!token) {

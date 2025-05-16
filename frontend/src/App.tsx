@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import ProfileView from "./pages/ProfileView";
 import ReviewsView from "./pages/ReviewsView";
 import PlaceDetail from "./pages/PlaceDetail";
+import FavouritesView from "./pages/FavouritesView";
 
 const Icon = styled.i`
     font-size: 4rem;
@@ -44,6 +45,7 @@ function App() {
                 <Route path="places" element={<StartView />} />
                 <Route path="places/:id" element={<PlaceDetail />} />
                 <Route path="profile" element={<ProfileView />} />
+				<Route path="profile/:id/favourites" element={<FavouritesView />} />
                 <Route path="reviews" element={<ReviewsView />} />
             </Routes>
             <MainContainer />

@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import favouriteImg from '../assets/images/favourite-placeholder.jpg'
+import favouriteImg from "../assets/images/favourite-placeholder.jpg";
+import reviewsImg from "../assets/images/reviews-placeholder.jpg";
 
 const ProfileContainer = styled.div`
     width: 100vw;
@@ -20,7 +22,7 @@ const Profilewrapper = styled.div`
     align-items: center;
     justify-content: space-evenly;
 `;
-const ContentCard = styled.div<{ favouriteImg: string }>`
+const ContentCard = styled.div<{ bgImg: string }>`
     position: relative;
     display: flex;
     justify-content: center;
@@ -29,6 +31,7 @@ const ContentCard = styled.div<{ favouriteImg: string }>`
     height: 20vh;
     border-radius: 1rem;
     background: url(${(props) => props.bgImg});
+    background-size: cover;
     margin: 2rem auto;
 `;
 const ProfileWhite = styled.div`
@@ -94,15 +97,17 @@ function ProfileView() {
                 <ProfileContainer>
                     <Header>{user.username}</Header>
                     <Profilewrapper>
-                        <ContentCard bgImg={favouriteImg}>
-                            <ProfileWhite>
-                                <ProfileText>Favourites</ProfileText>
-                            </ProfileWhite>
-                            <ProfileRed>
-                                <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
-                            </ProfileRed>
-                        </ContentCard>
-                        <ContentCard bgImg={favouriteImg}>
+                        <Link to={`/profile/${user.users_id}/favourites`}>
+                            <ContentCard bgImg={favouriteImg}>
+                                <ProfileWhite>
+                                    <ProfileText>Favourites</ProfileText>
+                                </ProfileWhite>
+                                <ProfileRed>
+                                    <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                                </ProfileRed>
+                            </ContentCard>
+                        </Link>
+                        <ContentCard bgImg={reviewsImg}>
                             <ProfileWhite>
                                 <ProfileText>Reviews</ProfileText>
                             </ProfileWhite>

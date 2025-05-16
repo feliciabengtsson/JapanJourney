@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
 
 	@font-face {
   		font-family: Hanayoru;
-  		src: url('../src/assets/font/HanayoruDemo-woq59.ttf') format('truetype');
+  		src: url('../public/font/HanayoruDemo-woq59.ttf') format('truetype');
 	}
 `;
 
