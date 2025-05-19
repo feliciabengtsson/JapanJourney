@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const Detailswrapper = styled.div`
     width: 100vw;
-    height: 72vh;
+    height: 79vh;
     position: absolute;
     bottom: 0;
 `;
@@ -27,7 +27,28 @@ const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
+const IconWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+`;
+const Icon = styled.i`
+    font-size: 1rem;
+    font-weight: 800;
+	margin-right: .3rem;
+`;
+const ReviewLink = styled(Link)`
+    font-size: .8rem;
+    text-decoration: none;
+	color: var(--color-secondary);
+    &:hover {
+        color: var(--color-neutral-light);
+    }
+    @media (min-width: 890px) {
+    }
+`;
 const PlaceName = styled.h3`
+    display: inline;
     font-size: 1.3rem;
     font-weight: 400;
     margin: 1rem 0 0.3rem;
@@ -83,7 +104,7 @@ function PlaceDetail() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-	    const renderCircles = (rating: number) => {
+    const renderCircles = (rating: number) => {
         const circles = [];
         const fullCircle = Math.floor(rating); //gets rating number rounded down
         const halfCircle = rating % 1 >= 0.5; //calculate if there is half a number/rating left, true or false
@@ -141,6 +162,10 @@ function PlaceDetail() {
                 )}
                 <ContentContainer>
                     <ContentWrapper>
+                        <IconWrapper>
+                            <Icon className="hgi hgi-stroke hgi-bubble-chat-edit" />
+							<ReviewLink to="reviews/add">Add Review</ReviewLink>
+                        </IconWrapper>
                         <PlaceName>{place.name}</PlaceName>
                         <PlaceDescription>
                             {renderCircles(place.avg_rating)}

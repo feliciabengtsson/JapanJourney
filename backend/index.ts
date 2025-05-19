@@ -31,6 +31,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+interface Reviews {
+    rating: number;
+    comment: string;
+}
+
 app.get("/jj/places", async (request: Request, response: Response) => {
     try {
         const { region, city, category } = request.query;
@@ -78,20 +83,20 @@ app.get("/jj/places/:id", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
-app.get(
+/* app.get(
     "/jj/places/:id/category",
     async (request: Request, response: Response) => {
         console.log("test");
         response.send("ok");
 
-        /* const { rows } = await client.query(
+         const { rows } = await client.query(
       'SELECT * FROM cities WHERE name = $1',
       ['Stockholm']
     )
   
-    response.send(rows) */
+    response.send(rows)
     }
-);
+); */
 app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
     try {
         const userId = request.params.id;
@@ -105,6 +110,27 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
         console.log(rows, "userId");
 
         response.status(200).send(rows);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
+});
+app.post("/jj/reviews", async (request: Request, response: Response) => {
+    try {
+        let rating: number = request.body.rating;
+        let comment: string = request.body.comment;
+        const reviews: Reviews = await client.query("SELECT * FROM reviews");
+
+        if (rating !== null && comment !== null) {
+            await client.query(
+                "INSERT INTO reviews (rating, comment) VALUES ($1, $2)",
+                [rating, comment]
+            );
+            console.log("lyckat");
+            response.status(201).send("Created");
+        } else {
+            response.status(400).send("Bad Request");
+        }
     } catch (error) {
         console.error(error);
         response.status(500).send("error");

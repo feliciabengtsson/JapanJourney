@@ -8,7 +8,7 @@ import reviewsImg from "../assets/images/reviews-placeholder.jpg";
 
 const ProfileContainer = styled.div`
     width: 100vw;
-    height: 64vh;
+    height: 70vh;
     position: fixed;
     bottom: 0;
 `;

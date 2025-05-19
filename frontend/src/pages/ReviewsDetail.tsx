@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 const Detailswrapper = styled.div`
     width: 100vw;
-    height: 72vh;
+    height: 79vh;
     position: absolute;
     bottom: 0;
 `;

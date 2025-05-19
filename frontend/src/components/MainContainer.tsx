@@ -16,10 +16,16 @@ const MainDiv = styled.div`
 
 function MainContainer() {
     const location = useLocation();
-	const mediumPaths: string[] = ["/places/:id", "/reviews/:id"]
+    const mediumPaths: string[] = [
+        "/places/:id",
+        "/reviews/:id",
+        "/places/:id/reviews/add",
+    ];
     const hideComponent = location.pathname === "/";
     const small = matchPath("/profile", location.pathname);
-    const medium = mediumPaths.find((path) => matchPath(path, location.pathname));
+    const medium = mediumPaths.find((path) =>
+        matchPath(path, location.pathname)
+    );
 
     return (
         <Fragment>
@@ -27,14 +33,14 @@ function MainContainer() {
                 <MainDiv
                     style={{
                         display: hideComponent ? "none" : "block",
-                        height: small ? "58vh" : "85vh",
+                        height: small ? "65vh" : "85vh",
                     }}
                 ></MainDiv>
             ) : (
                 <MainDiv
                     style={{
                         display: hideComponent ? "none" : "block",
-                        height: medium ? "65vh" : "85vh",
+                        height: medium ? "72vh" : "85vh",
                     }}
                 ></MainDiv>
             )}
