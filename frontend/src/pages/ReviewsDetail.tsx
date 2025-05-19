@@ -39,8 +39,13 @@ const PlaceRating = styled.span`
     margin: 0.5rem;
 `;
 
-interface PlaceType {
-    places_id: number;
+interface ReviewType {
+    reviews_id: number;
+    user_id: number;
+    place_id: number;
+    rating: number;
+    comment: string;
+    created: string;
     name: string;
     region: string;
     city: string;
@@ -52,11 +57,16 @@ interface PlaceType {
     lon: number;
 }
 
-function PlaceDetail() {
+function ReviewsDetail() {
     const { id } = useParams();
-    const placeId = id ? parseInt(id) : undefined;
-    const [place, setPlace] = useState<PlaceType>({
-        places_id: 0,
+    const reviewId = id ? parseInt(id) : undefined;
+    const [review, setReview] = useState<ReviewType>({
+        reviews_id: 0,
+        user_id: 0,
+        place_id: 0,
+        rating: 0,
+        comment: "",
+        created: "",
         name: "",
         region: "",
         city: "",
@@ -69,21 +79,21 @@ function PlaceDetail() {
     });
 
     useEffect(() => {
-        if (placeId !== undefined) {
-            fetch(`http://localhost:8080/jj/places/${placeId}`, {
+        if (reviewId !== undefined) {
+            fetch(`http://localhost:8080/jj/reviews/${reviewId}`, {
                 method: "GET",
                 credentials: "include",
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    setPlace(data);
-                    console.log(data, "chosen place");
+                    setReview(data);
+                    console.log(data, "chosen review");
                 });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-	    const renderCircles = (rating: number) => {
+    const renderCircles = (rating: number) => {
         const circles = [];
         const fullCircle = Math.floor(rating); //gets rating number rounded down
         const halfCircle = rating % 1 >= 0.5; //calculate if there is half a number/rating left, true or false
@@ -135,22 +145,19 @@ function PlaceDetail() {
     return (
         <Fragment>
             <Detailswrapper>
-                <Header>Details</Header>
-                {place.image_url && (
-                    <PlaceImg src={place.image_url} alt="Place cover image" />
-                )}
+                <Header>Your Review</Header>
+                <PlaceImg src={review.image_url} alt="Place cover image" />
                 <ContentContainer>
                     <ContentWrapper>
-                        <PlaceName>{place.name}</PlaceName>
+                        <PlaceName>{review.name}</PlaceName>
                         <PlaceDescription>
-                            {renderCircles(place.avg_rating)}
-                            <PlaceRating>{place.avg_rating}</PlaceRating>
+                            {renderCircles(review.rating)}
+                            <PlaceRating>{review.rating}</PlaceRating>
                         </PlaceDescription>
-                        <PlaceDescription>City: {place.city}</PlaceDescription>
+                        <p>{review.comment}</p>
                         <PlaceDescription>
-                            Region: {place.region}
+                            Created: {review.created}
                         </PlaceDescription>
-                        <p>{place.description}</p>
                     </ContentWrapper>
                 </ContentContainer>
             </Detailswrapper>
@@ -158,4 +165,4 @@ function PlaceDetail() {
     );
 }
 
-export default PlaceDetail;
+export default ReviewsDetail;

@@ -107,14 +107,16 @@ function ProfileView() {
                                 </ProfileRed>
                             </ContentCard>
                         </Link>
-                        <ContentCard bgImg={reviewsImg}>
-                            <ProfileWhite>
-                                <ProfileText>Reviews</ProfileText>
-                            </ProfileWhite>
-                            <ProfileRed>
-                                <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
-                            </ProfileRed>
-                        </ContentCard>
+                        <Link to={`/reviews`}>
+                            <ContentCard bgImg={reviewsImg}>
+                                <ProfileWhite>
+                                    <ProfileText>Reviews</ProfileText>
+                                </ProfileWhite>
+                                <ProfileRed>
+                                    <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                                </ProfileRed>
+                            </ContentCard>
+                        </Link>
                         ;
                     </Profilewrapper>
                 </ProfileContainer>

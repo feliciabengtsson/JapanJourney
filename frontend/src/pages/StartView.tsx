@@ -148,6 +148,19 @@ function Startview() {
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
 
+    useEffect(() => {
+        fetch("http://localhost:8080/jj/places", {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result, "fetched places");
+                setPlaces(result);
+                setDisplayedPlaces(result.slice(0, 10));
+            });
+    }, []);
+
     const renderCircles = (rating: number) => {
         const circles = [];
         const fullCircle = Math.floor(rating); //gets rating number rounded down
@@ -195,19 +208,6 @@ function Startview() {
         }
         return circles;
     };
-
-    useEffect(() => {
-        fetch("http://localhost:8080/jj/places", {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result, "fetched places");
-                setPlaces(result);
-                setDisplayedPlaces(result.slice(0, 10));
-            });
-    }, []);
 
     const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (
         event

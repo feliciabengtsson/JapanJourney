@@ -110,6 +110,53 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
+app.get("/jj/reviews/:id", async (request: Request, response: Response) => {
+    try {
+        const reviewId = request.params.id;
+
+        const { rows } = await client.query(
+            `SELECT r.*, p.* FROM reviews r JOIN places p ON r.place_id = p.places_id WHERE r.user_id = $1`,
+            [reviewId]
+        );
+        console.log(rows, "reviewId");
+
+        response.status(200).send(rows[0]);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
+});
+app.get(
+    "/jj/profile/reviews/",
+    async (request: Request, response: Response) => {
+        const token = request.cookies.token;
+        if (!token) {
+            response.status(401).send("Unauthorized");
+            return;
+        }
+
+        try {
+            const users = await client.query(
+                "SELECT user_id FROM tokens WHERE token = $1",
+                [token]
+            );
+            const user = users.rows[0].user_id;
+
+            const { rows } = await client.query(
+                `SELECT p.*, r.reviews_id FROM reviews r 
+			JOIN places p ON r.place_id = p.places_id 
+			WHERE r.user_id = $1`,
+                [user]
+            );
+            console.log(rows, "userId");
+
+            response.status(200).send(rows);
+        } catch (error) {
+            console.error(error);
+            response.status(500).send("error");
+        }
+    }
+);
 app.get("/jj/profile", async (request: Request, response: Response) => {
     const token = request.cookies.token;
     if (!token) {

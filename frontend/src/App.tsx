@@ -14,6 +14,7 @@ import ProfileView from "./pages/ProfileView";
 import ReviewsView from "./pages/ReviewsView";
 import PlaceDetail from "./pages/PlaceDetail";
 import FavouritesView from "./pages/FavouritesView";
+import ReviewsDetail from "./pages/ReviewsDetail";
 
 const Icon = styled.i`
     font-size: 4rem;
@@ -47,6 +48,7 @@ function App() {
                 <Route path="profile" element={<ProfileView />} />
 				<Route path="profile/:id/favourites" element={<FavouritesView />} />
                 <Route path="reviews" element={<ReviewsView />} />
+				<Route path="reviews/:id" element={<ReviewsDetail />} />
             </Routes>
             <MainContainer />
             <GlobalStyle />
