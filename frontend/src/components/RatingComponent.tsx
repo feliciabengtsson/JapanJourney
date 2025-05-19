@@ -19,11 +19,12 @@ const myStyles = {
 
 function RatingComponent() {
     const [rating, setRating] = useState(0); // Initial value
+	console.log(rating, 'vald rating')
 
     return (
         <Fragment>
             <Rating
-                style={{ maxWidth: 250 }}
+                style={{ maxWidth: 180 }}
                 value={rating}
                 onChange={setRating}
 				itemStyles={myStyles}

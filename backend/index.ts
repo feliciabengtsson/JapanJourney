@@ -134,6 +134,7 @@ app.post("/jj/reviews", async (request: Request, response: Response) => {
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
+
     }
 });
 app.get("/jj/reviews/:id", async (request: Request, response: Response) => {

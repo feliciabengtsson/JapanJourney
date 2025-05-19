@@ -96,7 +96,7 @@ function AddReview() {
         event.preventDefault(); // Prevents default form submission behavior
 
         try {
-            const response = await fetch("http://localhost:8080/reviews", {
+            const response = await fetch("http://localhost:3000/reviews", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -105,29 +105,11 @@ function AddReview() {
             });
 
             console.log(response, "sent to backend");
-            navigate("/"); // Redirect to new page
+            navigate("/places"); // Redirect to new page
         } catch (error) {
             console.error("error", error);
         }
     };
-/*     const renderCircles = () => {
-        const circles = [];
-
-        //make sure there is empty circles filled up if the rating is low
-        while (circles.length < 5) {
-            circles.push(
-                <i
-                    style={{
-                        fontSize: "1.5rem",
-                        margin: "0 .1em",
-                        color: "var(--color-secondary)",
-                    }}
-                    className="fa-regular fa-circle"
-                ></i>
-            );
-        }
-        return circles;
-    }; */
 
     return (
         <Fragment>
