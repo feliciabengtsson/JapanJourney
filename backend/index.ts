@@ -117,14 +117,16 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
 });
 app.post("/jj/reviews", async (request: Request, response: Response) => {
     try {
-        let rating: number = request.body.rating;
+        let userId: number = request.body.user_id;
+		let placeId: number = request.body.place_id;
+		let rating: number = request.body.rating;
         let comment: string = request.body.comment;
         const reviews: Reviews = await client.query("SELECT * FROM reviews");
 
         if (rating !== null && comment !== null) {
             await client.query(
-                "INSERT INTO reviews (rating, comment) VALUES ($1, $2)",
-                [rating, comment]
+                "INSERT INTO reviews (user_id, place_id, rating, comment) VALUES ($1, $2, $3, $4)",
+                [userId, placeId, rating, comment]
             );
             console.log("lyckat");
             response.status(201).send("Created");
@@ -134,7 +136,6 @@ app.post("/jj/reviews", async (request: Request, response: Response) => {
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
-
     }
 });
 app.get("/jj/reviews/:id", async (request: Request, response: Response) => {
@@ -142,7 +143,7 @@ app.get("/jj/reviews/:id", async (request: Request, response: Response) => {
         const reviewId = request.params.id;
 
         const { rows } = await client.query(
-            `SELECT r.*, p.* FROM reviews r JOIN places p ON r.place_id = p.places_id WHERE r.user_id = $1`,
+            `SELECT r.*, p.* FROM reviews r JOIN places p ON r.place_id = p.places_id WHERE r.reviews_id = $1`,
             [reviewId]
         );
         console.log(rows, "reviewId");
@@ -175,7 +176,6 @@ app.get(
 			WHERE r.user_id = $1`,
                 [user]
             );
-            console.log(rows, "userId");
 
             response.status(200).send(rows);
         } catch (error) {
@@ -231,7 +231,13 @@ app.post("/jj/login", async (request: Request, response: Response) => {
         console.log(token, "token har lagts till");
 
         response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
-        response.status(200).send("token");
+        response
+            .status(200)
+            .send({
+                users_id: user.users_id,
+                username: user.username,
+                email: user.email,
+            });
     } catch (error) {
         console.error(error);
         response.status(500).send("error");

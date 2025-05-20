@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import { Fragment } from "react/jsx-runtime";
-
 import { Routes, Route } from "react-router-dom";
 
 import StartView from "./pages/StartView";
@@ -16,6 +15,7 @@ import PlaceDetail from "./pages/PlaceDetail";
 import FavouritesView from "./pages/FavouritesView";
 import ReviewsDetail from "./pages/ReviewsDetail";
 import AddReview from "./pages/AddReview";
+import { UserProvider } from "./UserContext";
 
 const Icon = styled.i`
     font-size: 4rem;
@@ -35,25 +35,35 @@ function App() {
 
     return (
         <Fragment>
-            <IconWrapper style={{ display: hideComponent ? "none" : "block" }}>
-                <Icon
-                    onClick={toggle}
-                    className="hgi hgi-stroke hgi-location-01"
-                />
-            </IconWrapper>
-            <SideNav isOpen={isOpen} toggle={toggle} />
-            <Routes>
-                <Route path="/" element={<Loginview />} />
-                <Route path="places" element={<StartView />} />
-                <Route path="places/:id" element={<PlaceDetail />} />
-                <Route path="profile" element={<ProfileView />} />
-				<Route path="profile/:id/favourites" element={<FavouritesView />} />
-                <Route path="reviews" element={<ReviewsView />} />
-				<Route path="reviews/:id" element={<ReviewsDetail />} />
-				<Route path="places/:id/reviews/add" element={<AddReview />} />
-            </Routes>
-            <MainContainer />
-            <GlobalStyle />
+            <UserProvider>
+                <IconWrapper
+                    style={{ display: hideComponent ? "none" : "block" }}
+                >
+                    <Icon
+                        onClick={toggle}
+                        className="hgi hgi-stroke hgi-location-01"
+                    />
+                </IconWrapper>
+                <SideNav isOpen={isOpen} toggle={toggle} />
+                <Routes>
+                    <Route path="/" element={<Loginview />} />
+                    <Route path="places" element={<StartView />} />
+                    <Route path="places/:id" element={<PlaceDetail />} />
+                    <Route path="profile" element={<ProfileView />} />
+                    <Route
+                        path="profile/:id/favourites"
+                        element={<FavouritesView />}
+                    />
+                    <Route path="reviews" element={<ReviewsView />} />
+                    <Route path="reviews/:id" element={<ReviewsDetail />} />
+                    <Route
+                        path="places/:id/reviews/add"
+                        element={<AddReview />}
+                    />
+                </Routes>
+                <MainContainer />
+                <GlobalStyle />
+            </UserProvider>
         </Fragment>
     );
 }

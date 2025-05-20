@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 	place_id INTEGER,
 	rating INTEGER CHECK (rating BETWEEN 1 AND 5),
 	comment TEXT,
-	created TIMESTAMP DEFAULT NOW(),
+	created TIMESTAMP DEFAULT current_date,
 	PRIMARY KEY (reviews_id, user_id, place_id),
 	FOREIGN KEY(user_id) REFERENCES users(users_id),
 	FOREIGN KEY(place_id) REFERENCES places(places_id)

@@ -1,7 +1,8 @@
 /* https://stackoverflow.com/questions/34558264/fetch-api-with-cookie */
 import styled from "styled-components";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../UserContext";
 
 const ModalContainer = styled.div`
     width: 100vw;
@@ -82,6 +83,7 @@ function LoginModal(props: Login) {
     });
     const [loginInfo, setLoginInfo] = useState(false);
     const navigate = useNavigate();
+	const { login } = useContext(UserContext);
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents default form submission behavior
@@ -100,7 +102,10 @@ function LoginModal(props: Login) {
                 console.log(response, "sent to backend");
 
                 if (response.ok) {
-                    navigate("/places"); // Redirect to new page
+                    const userData = await response.json();
+					console.log(userData, 'userData')
+ 					login(userData);
+					navigate("/places");/// Redirect to new page
                 } else {
                     console.log("fel inlogg)");
                     setLoginInfo(true);

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
+import UserContext from "../UserContext";
+import { useContext } from "react";
 
 const NavWrapper = styled.div`
     width: 85%;
@@ -74,7 +76,9 @@ interface Nav {
 }
 
 function SideNav(props: Nav) {
-    return (
+    const { logout } = useContext(UserContext);
+	
+	return (
         <Fragment>
             {props.isOpen && (
                 <NavWrapper>
@@ -102,10 +106,13 @@ function SideNav(props: Nav) {
                             Profile
                         </NavLinks>
                         <NavLinks to="reviews" onClick={props.toggle}>
-                            Reviews
+                            Explore
                         </NavLinks>
                         <LogoutWrapper>
-                            <NavLinks to="/" onClick={props.toggle}>
+                            <NavLinks to="/" onClick={() => {
+								props.toggle();
+								logout();
+							}}>
                                 Logout
                                 <Logout className="hgi hgi-stroke hgi-logout-01" />
                             </NavLinks>

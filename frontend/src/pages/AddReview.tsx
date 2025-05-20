@@ -2,13 +2,29 @@
  https://js.devexpress.com/React/Documentation/20_2/Guide/UI_Components/TextArea/Handle_the_Value_Change_Event/
  https://www.dhiwise.com/post/how-to-handle-multi-line-text-input-with-react-textarea
 */
+/* https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f 
+https://github.com/smastrom/react-rating*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Rating } from "@smastrom/react-rating";
 
 import CoverImg from "../assets/images/reviews-placeholder.jpg";
-import RatingComponent from "../components/RatingComponent";
+
+import "@smastrom/react-rating/style.css";
+import UserContext from "../UserContext";
+const circleShape = (
+    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
+);
+const myStyles = {
+    itemShapes: circleShape,
+    itemStrokeWidth: 30,
+    activeFillColor: "var(--color-secondary)",
+    activeStrokeColor: "var(--color-secondary)",
+    inactiveFillColor: "none",
+    inactiveStrokeColor: "var(--color-secondary)",
+};
 
 const Detailswrapper = styled.div`
     width: 100vw;
@@ -70,17 +86,19 @@ const CreateBtn = styled.input`
 `;
 
 interface FormType {
-    rating: number;
-    comment: string;
+    description: string;
 }
 
 function AddReview() {
     const [inputValue, setInputValue] = useState<FormType>({
-        rating: 0,
-        comment: "",
+        description: "",
     });
 
     const navigate = useNavigate();
+    const [rating, setRating] = useState<number>(0); // Initial value
+    const { id } = useParams();
+    const placeId = id ? parseInt(id) : undefined;
+    const { user } = useContext(UserContext);
 
     const handleInputChange = (
         event: React.ChangeEvent<HTMLTextAreaElement>
@@ -94,17 +112,24 @@ function AddReview() {
     };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents default form submission behavior
+        const reviewForm = {
+            user_id: user.users_id,
+            place_id: placeId,
+            rating,
+            comment: inputValue.description,
+        };
+        console.log(reviewForm, "reviewForm");
 
         try {
-            const response = await fetch("http://localhost:3000/reviews", {
+            const response = await fetch("http://localhost:8080/jj/reviews", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(inputValue),
+                body: JSON.stringify(reviewForm),
             });
 
-            console.log(response, "sent to backend");
+            console.log(response, "response");
             navigate("/places"); // Redirect to new page
         } catch (error) {
             console.error("error", error);
@@ -121,7 +146,12 @@ function AddReview() {
                         <RatingWrapper>
                             <p>How would you rate your experience?</p>
                             <RatingDescription>
-                                <RatingComponent />
+                                <Rating
+                                    style={{ maxWidth: 180 }}
+                                    value={rating}
+                                    onChange={setRating}
+                                    itemStyles={myStyles}
+                                />
                             </RatingDescription>
                         </RatingWrapper>
                         <RatingWrapper>
