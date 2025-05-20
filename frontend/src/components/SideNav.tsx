@@ -105,7 +105,7 @@ function SideNav(props: Nav) {
                         <NavLinks to="profile" onClick={props.toggle}>
                             Profile
                         </NavLinks>
-                        <NavLinks to="reviews" onClick={props.toggle}>
+                        <NavLinks to="explore" onClick={props.toggle}>
                             Explore
                         </NavLinks>
                         <LogoutWrapper>

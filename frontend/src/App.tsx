@@ -16,6 +16,7 @@ import FavouritesView from "./pages/FavouritesView";
 import ReviewsDetail from "./pages/ReviewsDetail";
 import AddReview from "./pages/AddReview";
 import { UserProvider } from "./UserContext";
+import SearchView from "./pages/SearchView";
 
 const Icon = styled.i`
     font-size: 4rem;
@@ -60,6 +61,7 @@ function App() {
                         path="places/:id/reviews/add"
                         element={<AddReview />}
                     />
+					<Route path="/search" element={<SearchView />} />
                 </Routes>
                 <MainContainer />
                 <GlobalStyle />

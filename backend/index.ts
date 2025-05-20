@@ -1,8 +1,8 @@
 /* https://dev.to/achukka/add-postgresql-to-express-server-2f0k */
 /* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe 
 https://dev.to/alexmercedcoder/expressjs-handling-cross-origin-cookies-38l9
-https://www.postgresql.org/docs/current/tutorial-join.html*/
-
+https://www.postgresql.org/docs/current/tutorial-join.html
+https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c*/
 import cors from "cors";
 import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
@@ -83,20 +83,6 @@ app.get("/jj/places/:id", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
-/* app.get(
-    "/jj/places/:id/category",
-    async (request: Request, response: Response) => {
-        console.log("test");
-        response.send("ok");
-
-         const { rows } = await client.query(
-      'SELECT * FROM cities WHERE name = $1',
-      ['Stockholm']
-    )
-  
-    response.send(rows)
-    }
-); */
 app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
     try {
         const userId = request.params.id;
@@ -118,8 +104,8 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
 app.post("/jj/reviews", async (request: Request, response: Response) => {
     try {
         let userId: number = request.body.user_id;
-		let placeId: number = request.body.place_id;
-		let rating: number = request.body.rating;
+        let placeId: number = request.body.place_id;
+        let rating: number = request.body.rating;
         let comment: string = request.body.comment;
         const reviews: Reviews = await client.query("SELECT * FROM reviews");
 
@@ -231,13 +217,11 @@ app.post("/jj/login", async (request: Request, response: Response) => {
         console.log(token, "token har lagts till");
 
         response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
-        response
-            .status(200)
-            .send({
-                users_id: user.users_id,
-                username: user.username,
-                email: user.email,
-            });
+        response.status(200).send({
+            users_id: user.users_id,
+            username: user.username,
+            email: user.email,
+        });
     } catch (error) {
         console.error(error);
         response.status(500).send("error");

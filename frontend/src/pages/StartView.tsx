@@ -11,7 +11,7 @@ https://blog.petefowler.dev/how-to-make-a-star-rating-display-in-react-thats-bet
 
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const MainContainer = styled.div`
@@ -147,6 +147,7 @@ function Startview() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
+	const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:8080/jj/places", {
@@ -233,25 +234,18 @@ function Startview() {
         if (name === "selectedRegion") {
             setSelectedRegion(value);
             queryParams.append("region", value);
+			navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCity") {
             setSelectedCity(value);
             queryParams.append("city", value);
+			navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCategory") {
             setSelectedCategory(value);
             queryParams.append("category", value);
+			navigate(`/search?${queryParams}`); // Redirect to new page
         }
-
-        fetch(`http://localhost:8080/jj/places?${queryParams}`, {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result, "new fetch");
-                setFilteredPlaces(result);
-            });
     };
 
     return (
