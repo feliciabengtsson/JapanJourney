@@ -77,8 +77,8 @@ interface Nav {
 
 function SideNav(props: Nav) {
     const { logout } = useContext(UserContext);
-	
-	return (
+
+    return (
         <Fragment>
             {props.isOpen && (
                 <NavWrapper>
@@ -109,10 +109,13 @@ function SideNav(props: Nav) {
                             Explore
                         </NavLinks>
                         <LogoutWrapper>
-                            <NavLinks to="/" onClick={() => {
-								props.toggle();
-								logout();
-							}}>
+                            <NavLinks
+                                to="/"
+                                onClick={() => {
+                                    props.toggle();
+                                    logout();
+                                }}
+                            >
                                 Logout
                                 <Logout className="hgi hgi-stroke hgi-logout-01" />
                             </NavLinks>

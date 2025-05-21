@@ -83,7 +83,7 @@ function LoginModal(props: Login) {
     });
     const [loginInfo, setLoginInfo] = useState(false);
     const navigate = useNavigate();
-	const { login } = useContext(UserContext);
+    const { login } = useContext(UserContext);
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents default form submission behavior
@@ -92,7 +92,7 @@ function LoginModal(props: Login) {
             if (input.email !== "" && input.password !== "") {
                 const response = await fetch("http://localhost:8080/jj/login", {
                     method: "POST",
-					credentials: 'include',
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -103,9 +103,9 @@ function LoginModal(props: Login) {
 
                 if (response.ok) {
                     const userData = await response.json();
-					console.log(userData, 'userData')
- 					login(userData);
-					navigate("/places");/// Redirect to new page
+                    console.log(userData, "userData");
+                    login(userData);
+                    navigate("/places"); /// Redirect to new page
                 } else {
                     console.log("fel inlogg)");
                     setLoginInfo(true);
@@ -120,7 +120,7 @@ function LoginModal(props: Login) {
         const { name, value } = event.target;
 
         setInput((prev) => ({
-            ...prev, 
+            ...prev,
             [name]: value, // Update form data for the input field that changed
         }));
     };
@@ -146,8 +146,8 @@ function LoginModal(props: Login) {
                                 name="email"
                                 type="email"
                                 placeholder="name@example.com"
-								aria-describedby="user-email"
-								aria-invalid="false"
+                                aria-describedby="user-email"
+                                aria-invalid="false"
                             />
                             <label htmlFor="user-password">Password:</label>
                             <LoginInput
@@ -156,8 +156,8 @@ function LoginModal(props: Login) {
                                 name="password"
                                 type="password"
                                 placeholder="password"
-								aria-describedby="user-password"
-								aria-invalid="false"
+                                aria-describedby="user-password"
+                                aria-invalid="false"
                             />
                             {loginInfo ? (
                                 <p>Wrong login information!</p>

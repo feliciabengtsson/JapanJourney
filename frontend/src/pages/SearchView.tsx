@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import eventsImg from "../assets/images/reviews-placeholder.jpg";
+import { useEffect, useState } from "react";
 
 const SearchContainer = styled.div`
     width: 100vw;
@@ -20,8 +19,8 @@ const SearchWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-	height: 85vh;
-	overflow-y: auto;
+    height: 85vh;
+    overflow-y: auto;
 `;
 const ContentCard = styled.div`
     position: relative;
@@ -33,7 +32,7 @@ const ContentCard = styled.div`
     border-radius: 3rem;
     background: var(--color-neutral-light);
     background-size: cover;
-    margin: 2rem auto;
+    margin: 0.7rem auto;
 `;
 const TextWrapper = styled.div`
     display: flex;
@@ -47,13 +46,52 @@ const Arrow = styled.i`
 const ImgWrapper = styled.div`
     height: inherit;
 `;
+const Image = styled.img`
+    width: 9rem;
+    height: inherit;
+    border-radius: 0 3rem 3rem 0;
+    object-fit: cover;
+`;
+
+interface PlaceType {
+    places_id: number;
+    name: string;
+    region: string;
+    city: string;
+    category: string;
+    description: string;
+    image_url: string;
+    avg_rating: number;
+    lat: number;
+    lon: number;
+}
 
 function SearchView() {
     const [searchParams] = useSearchParams();
     const region = searchParams.get("region");
     const city = searchParams.get("city");
-    const category = searchParams.get("category");
-    console.log(city, "city");
+    const params = new URLSearchParams();
+
+    if (region) {
+        params.append("region", region);
+    } else if (city) {
+        params.append("city", city);
+    }
+
+    const [cities, setCities] = useState<PlaceType[]>([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/jj/places?${params}`, {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result, "fetched places");
+                setCities(result);
+            });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Fragment>
@@ -61,140 +99,46 @@ function SearchView() {
                 <Header>
                     {region}
                     {city}
-                    {category}
                 </Header>
-				<SearchWrapper>
-                    <Link to={`/reviews`}>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Anime</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Culture</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Events</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Food</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>History</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Nature</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Relaxation</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                        <ContentCard>
-                            <TextWrapper>
-                                <p>Shopping</p>
-                                <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
-                            </TextWrapper>
-                            <ImgWrapper>
-                                <img
-                                    src={eventsImg}
-                                    style={{
-                                        height: "inherit",
-                                        borderRadius: "0 3rem 3rem 0",
-                                    }}
-                                    alt="Events placeholder image"
-                                />
-                            </ImgWrapper>
-                        </ContentCard>
-                    </Link>
-                </SearchWrapper>
+                {region ? (
+                    <SearchWrapper>
+                        {cities.map((city) => (
+                            <Link to={`details?city=${city.city}`}>
+                                <ContentCard key={city.places_id}>
+                                    <TextWrapper>
+                                        <p>{city.city}</p>
+                                        <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
+                                    </TextWrapper>
+                                    <ImgWrapper>
+                                        <Image
+                                            src={city.image_url}
+                                            alt="Placeholder image"
+                                        />
+                                    </ImgWrapper>
+                                </ContentCard>
+                            </Link>
+                        ))}
+                    </SearchWrapper>
+                ) : (
+                    <SearchWrapper>
+                        {cities.map((city) => (
+                            <Link to={`/categories?${params}&category=${city.category}`}>
+                                <ContentCard key={city.places_id}>
+                                    <TextWrapper>
+                                        <p>{city.category}</p>
+                                        <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />
+                                    </TextWrapper>
+                                    <ImgWrapper>
+                                        <Image
+                                            src={city.image_url}
+                                            alt="Placeholder image"
+                                        />
+                                    </ImgWrapper>
+                                </ContentCard>
+                            </Link>
+                        ))}
+                    </SearchWrapper>
+                )}
             </SearchContainer>
         </Fragment>
     );

@@ -70,14 +70,14 @@ const IconArrow = styled.i`
 interface Places {
     places_id: number;
     name: string;
-	region: string;
-	city: string;
-	category: string;
-	description: string;
-	image_url: string;
-	avg_rating: number;
-	lat: number;
-	lon: number;
+    region: string;
+    city: string;
+    category: string;
+    description: string;
+    image_url: string;
+    avg_rating: number;
+    lat: number;
+    lon: number;
 }
 
 function FavouritesView() {
@@ -103,15 +103,20 @@ function FavouritesView() {
                 <Favouritewrapper>
                     {favourites.map((place) => (
                         <Link to={`/places/${place.places_id}`}>
-						<ContentCard key={place.places_id} style={{ backgroundImage: `url(${place.image_url})` }}>
-                            <FavouriteWhite>
-                                <FavouriteText>{place.name}</FavouriteText>
-                            </FavouriteWhite>
-                            <FavouriteRed>
-                                <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
-                            </FavouriteRed>
-                        </ContentCard>
-						</Link>
+                            <ContentCard
+                                key={place.places_id}
+                                style={{
+                                    backgroundImage: `url(${place.image_url})`,
+                                }}
+                            >
+                                <FavouriteWhite>
+                                    <FavouriteText>{place.name}</FavouriteText>
+                                </FavouriteWhite>
+                                <FavouriteRed>
+                                    <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
+                                </FavouriteRed>
+                            </ContentCard>
+                        </Link>
                     ))}
                 </Favouritewrapper>
             </FavouriteContainer>

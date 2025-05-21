@@ -147,7 +147,7 @@ function Startview() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:8080/jj/places", {
@@ -234,17 +234,17 @@ function Startview() {
         if (name === "selectedRegion") {
             setSelectedRegion(value);
             queryParams.append("region", value);
-			navigate(`/search?${queryParams}`); // Redirect to new page
+            navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCity") {
             setSelectedCity(value);
             queryParams.append("city", value);
-			navigate(`/search?${queryParams}`); // Redirect to new page
+            navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCategory") {
             setSelectedCategory(value);
             queryParams.append("category", value);
-			navigate(`/search?${queryParams}`); // Redirect to new page
+            navigate(`/categories?${queryParams}`); // Redirect to new page
         }
     };
 

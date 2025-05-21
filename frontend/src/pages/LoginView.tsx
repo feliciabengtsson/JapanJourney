@@ -39,7 +39,7 @@ const LoginPink = styled.div`
     border-radius: 3rem;
     background: rgba(255, 144, 124, 0.68);
     margin: auto;
-	cursor: pointer;
+    cursor: pointer;
 `;
 const LoginText = styled.h2`
     margin-left: 2rem;
@@ -54,7 +54,7 @@ const LoginRed = styled.div`
     border-radius: 3rem;
     background: var(--color-secondary);
     text-align: center;
-	cursor: pointer;
+    cursor: pointer;
 `;
 const IconArrow = styled.i`
     font-size: 3.5rem;
@@ -63,17 +63,17 @@ const IconArrow = styled.i`
 `;
 const CreateAccount = styled.p`
     position: absolute;
-	bottom: 2rem;
-	color: var(--color-neutral-light);
+    bottom: 2rem;
+    color: var(--color-neutral-light);
 `;
 const CreateLink = styled.span`
-	color: var(--color-accent-light);
-	cursor: pointer;
+    color: var(--color-accent-light);
+    cursor: pointer;
 `;
 
 function Loginview() {
     const { isOpenLogin, toggleLogin } = useModal();
-	const { isOpenSignup, toggleSignup } = useModal();
+    const { isOpenSignup, toggleSignup } = useModal();
     return (
         <Fragment>
             <DivHeader>
@@ -93,12 +93,16 @@ function Loginview() {
                     <IconArrow className="hgi hgi-stroke hgi-arrow-right-02" />
                 </LoginRed>
                 <CreateAccount>
-                    Don't have an account? Create new <CreateLink onClick={toggleSignup}>here</CreateLink>
+                    Don't have an account? Create new{" "}
+                    <CreateLink onClick={toggleSignup}>here</CreateLink>
                 </CreateAccount>
             </LoginWrapper>
 
             <LoginModal isOpenLogin={isOpenLogin} toggleLogin={toggleLogin} />
-			<CreateAccountModal isOpenSignup={isOpenSignup} toggleSignup={toggleSignup} />
+            <CreateAccountModal
+                isOpenSignup={isOpenSignup}
+                toggleSignup={toggleSignup}
+            />
         </Fragment>
     );
 }

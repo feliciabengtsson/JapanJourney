@@ -49,7 +49,7 @@ const ReviewsText = styled.h3`
 `;
 const ReviewsRed = styled.div`
     position: absolute;
-    bottom: .8rem;
+    bottom: 0.8rem;
     right: 3.5rem;
     display: flex;
     justify-content: center;
@@ -73,8 +73,8 @@ interface Reviews {
     places_id: number;
     rating: number;
     comment: string;
-	name: string;
-	image_url: string;
+    name: string;
+    image_url: string;
 }
 
 function ReviewsView() {

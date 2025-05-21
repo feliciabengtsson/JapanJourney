@@ -39,6 +39,7 @@ interface Reviews {
 app.get("/jj/places", async (request: Request, response: Response) => {
     try {
         const { region, city, category } = request.query;
+        console.log(region);
 
         if (region) {
             const { rows } = await client.query(
@@ -46,13 +47,19 @@ app.get("/jj/places", async (request: Request, response: Response) => {
                 [region]
             );
             response.status(200).send(rows);
-        } else if (city) {
+        } else if (city && category === undefined) {
             const { rows } = await client.query(
-                "SELECT * FROM places WHERE city = $1",
+                "SELECT places_id, category, image_url FROM places WHERE city = $1",
                 [city]
             );
             response.status(200).send(rows);
-        } else if (category) {
+        } else if (category && city) {
+            const { rows } = await client.query(
+                "SELECT * FROM places WHERE category = $1 AND city = $2",
+                [category, city]
+            );
+            response.status(200).send(rows);
+        } else if (category && city === undefined) {
             const { rows } = await client.query(
                 "SELECT * FROM places WHERE category = $1",
                 [category]

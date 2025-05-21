@@ -35,12 +35,12 @@ const IconWrapper = styled.div`
 const Icon = styled.i`
     font-size: 1rem;
     font-weight: 800;
-	margin-right: .3rem;
+    margin-right: 0.3rem;
 `;
 const ReviewLink = styled(Link)`
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-decoration: none;
-	color: var(--color-secondary);
+    color: var(--color-secondary);
     &:hover {
         color: var(--color-neutral-light);
     }
@@ -164,7 +164,7 @@ function PlaceDetail() {
                     <ContentWrapper>
                         <IconWrapper>
                             <Icon className="hgi hgi-stroke hgi-bubble-chat-edit" />
-							<ReviewLink to="reviews/add">Add Review</ReviewLink>
+                            <ReviewLink to="reviews/add">Add Review</ReviewLink>
                         </IconWrapper>
                         <PlaceName>{place.name}</PlaceName>
                         <PlaceDescription>

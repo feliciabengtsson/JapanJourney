@@ -99,7 +99,7 @@ function CreateAccountModal(props: Signup) {
         try {
             const response = await fetch("http://localhost:8080/jj/signup", {
                 method: "POST",
-				credentials: 'include',
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -165,7 +165,11 @@ function CreateAccountModal(props: Signup) {
                             ) : (
                                 <p></p>
                             )}
-                            <LoginBtn onClick={props.toggleSignup} type="submit" value="Signup" />
+                            <LoginBtn
+                                onClick={props.toggleSignup}
+                                type="submit"
+                                value="Signup"
+                            />
                         </Form>
                     </ModalWrapper>
                 </ModalContainer>
