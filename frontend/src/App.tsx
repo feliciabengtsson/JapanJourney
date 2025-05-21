@@ -19,6 +19,7 @@ import { UserProvider } from "./UserContext";
 import SearchView from "./pages/SearchView";
 import SearchDetails from "./pages/SearchDetails";
 import CategoriesDetail from "./pages/CategoriesDetail";
+import ExploreView from "./pages/ExploreView";
 
 const Icon = styled.i`
     font-size: 4rem;
@@ -66,6 +67,7 @@ function App() {
 					<Route path="/search" element={<SearchView />} />
 					<Route path="/search/details" element={<SearchDetails />} />
 					<Route path="/categories" element={<CategoriesDetail />} />
+					<Route path="/explore" element={<ExploreView />} />
                 </Routes>
                 <MainContainer />
                 <GlobalStyle />

@@ -20,6 +20,7 @@ function MainContainer() {
         "/places/:id",
         "/reviews/:id",
         "/places/:id/reviews/add",
+		"/explore"
     ];
     const hideComponent = location.pathname === "/";
     const small = matchPath("/profile", location.pathname);
