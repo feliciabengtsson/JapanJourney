@@ -90,7 +90,6 @@ function FavouritesView() {
                 .then((response) => response.json())
                 .then((data) => {
                     setFavourites(data);
-                    console.log(data, "favourites");
                 });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

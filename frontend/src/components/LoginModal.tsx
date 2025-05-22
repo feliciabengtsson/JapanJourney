@@ -1,4 +1,5 @@
-/* https://stackoverflow.com/questions/34558264/fetch-api-with-cookie */
+/* https://stackoverflow.com/questions/34558264/fetch-api-with-cookie 
+https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions*/
 import styled from "styled-components";
 import { useState, Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +76,12 @@ interface FormType {
     email: string;
     password: string;
 }
+interface User {
+    users_id: number;
+    username: string;
+	email: string;
+	password: string;
+}
 
 function LoginModal(props: Login) {
     const [input, setInput] = useState<FormType>({
@@ -99,11 +106,8 @@ function LoginModal(props: Login) {
                     body: JSON.stringify(input),
                 });
 
-                console.log(response, "sent to backend");
-
                 if (response.ok) {
-                    const userData = await response.json();
-                    console.log(userData, "userData");
+                    const userData = await response.json() as User;
                     login(userData);
                     navigate("/places"); /// Redirect to new page
                 } else {

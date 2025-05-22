@@ -87,7 +87,6 @@ function SearchView() {
         })
             .then((response) => response.json())
             .then((result) => {
-                console.log(result, "fetched places");
                 setCities(result);
             });
     // eslint-disable-next-line react-hooks/exhaustive-deps

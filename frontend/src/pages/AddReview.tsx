@@ -25,7 +25,6 @@ const myStyles = {
     inactiveFillColor: "none",
     inactiveStrokeColor: "var(--color-secondary)",
 };
-
 const Detailswrapper = styled.div`
     width: 100vw;
     height: 79vh;
@@ -113,23 +112,20 @@ function AddReview() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents default form submission behavior
         const reviewForm = {
-            user_id: user.users_id,
+            user_id: user?.users_id,
             place_id: placeId,
             rating,
             comment: inputValue.description,
         };
-        console.log(reviewForm, "reviewForm");
 
         try {
-            const response = await fetch("http://localhost:8080/jj/reviews", {
+            await fetch("http://localhost:8080/jj/reviews", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(reviewForm),
             });
-
-            console.log(response, "response");
             navigate("/places"); // Redirect to new page
         } catch (error) {
             console.error("error", error);

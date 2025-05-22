@@ -98,7 +98,6 @@ function PlaceDetail() {
                 .then((response) => response.json())
                 .then((data) => {
                     setPlace(data);
-                    console.log(data, "chosen place");
                 });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

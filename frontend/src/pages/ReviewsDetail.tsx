@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { useParams } from "react-router-dom";
 
 const Detailswrapper = styled.div`
@@ -87,14 +87,13 @@ function ReviewsDetail() {
                 .then((response) => response.json())
                 .then((data) => {
                     setReview(data);
-                    console.log(data, "chosen review");
                 });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const renderCircles = (rating: number) => {
-        const circles = [];
+        const circles: JSX.Element[] = [];
         const fullCircle = Math.floor(rating); //gets rating number rounded down
         const halfCircle = rating % 1 >= 0.5; //calculate if there is half a number/rating left, true or false
 
@@ -124,8 +123,6 @@ function ReviewsDetail() {
                 ></i>
             );
         }
-
-        console.log(circles, "circles");
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(

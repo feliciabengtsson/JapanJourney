@@ -7,12 +7,13 @@ https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f
 https://www.npmjs.com/package/react-rating-stars-component
 https://stackoverflow.com/questions/74138879/how-to-render-elements-based-on-a-given-value-in-react-js
 https://stackoverflow.com/questions/71023164/how-to-show-stars-based-on-user-rating
-https://blog.petefowler.dev/how-to-make-a-star-rating-display-in-react-thats-better-than-the-one-on-yelpcom*/
+https://blog.petefowler.dev/how-to-make-a-star-rating-display-in-react-thats-better-than-the-one-on-yelpcom
+https://www.typescriptlang.org/docs/handbook/jsx.html*/
 
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 
 const MainContainer = styled.div`
     display: flex;
@@ -156,14 +157,13 @@ function Startview() {
         })
             .then((response) => response.json())
             .then((result) => {
-                console.log(result, "fetched places");
                 setPlaces(result);
                 setDisplayedPlaces(result.slice(0, 10));
             });
     }, []);
 
     const renderCircles = (rating: number) => {
-        const circles = [];
+        const circles: JSX.Element[] = [];
         const fullCircle = Math.floor(rating); //gets rating number rounded down
         const halfCircle = rating % 1 >= 0.5; //calculate if there is half a number/rating left, true or false
 
@@ -219,7 +219,6 @@ function Startview() {
         const filteredSearch = places.filter((place) =>
             place.name.toLowerCase().includes(searchInput.toLowerCase())
         );
-        console.log(searchInput, "searched places");
         setFilteredPlaces(filteredSearch);
     };
 

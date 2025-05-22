@@ -2,7 +2,7 @@
  https://v5.reactrouter.com/web/api/matchPath*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
-import { useLocation, matchPath } from "react-router-dom";
+import { useLocation, matchPath, type Location } from "react-router-dom";
 
 const MainDiv = styled.div`
     position: fixed;
@@ -15,7 +15,7 @@ const MainDiv = styled.div`
 `;
 
 function MainContainer() {
-    const location = useLocation();
+    const location: Location<string> = useLocation();
     const mediumPaths: string[] = [
         "/places/:id",
         "/reviews/:id",

@@ -106,8 +106,6 @@ function CreateAccountModal(props: Signup) {
                 body: JSON.stringify(formData),
             });
 
-            console.log(response, "sent to backend");
-
             if (response.ok) {
                 navigate("/"); // Redirect to new page
             } else if (formData.email === "" || formData.username === "") {

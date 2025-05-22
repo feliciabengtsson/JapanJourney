@@ -86,7 +86,6 @@ function ProfileView() {
         })
             .then((response) => response.json())
             .then((result) => {
-                console.log(result, "fetched user");
                 setUser(result);
             });
     }, []);

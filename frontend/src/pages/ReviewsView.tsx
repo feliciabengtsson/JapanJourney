@@ -87,7 +87,6 @@ function ReviewsView() {
         })
             .then((response) => response.json())
             .then((result) => {
-                console.log(result, "fetched reviews");
                 setReviews(result);
             });
     }, []);
