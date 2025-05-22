@@ -43,16 +43,16 @@ interface Users {
     password: string;
 }
 interface Places {
-    places_id?: number,
-    name?: string,
-    region?: string,
-    city?: string;
-    category?: string;
-    description?: string;
-    image_url?: string;
-    avg_rating?: number;
-    lat?: number;
-    lon?: number;
+    places_id: number,
+    name: string,
+    region: string,
+    city: string;
+    category: string;
+    description: string;
+    image_url: string;
+    avg_rating: number;
+    lat: number;
+    lon: number;
 }
 interface Favourites {
     user_id: number,
@@ -62,39 +62,42 @@ interface Tokens {
     user_id: number,
     token: string,
 }
+interface LoginInfo {
+    username: string,
+	email: string,
+    password: string,
+}
 
 app.get("/jj/places", async (request: Request, response: Response) => {
     try {
         const { region, city, category } = request.query;
-        console.log(region);
 
         if (region) {
-            //any
-            const { rows } = await client.query(
+            const { rows } = await client.query<Places>(
                 "SELECT * FROM places WHERE region = $1",
                 [region]
             );
             response.status(200).send(rows);
         } else if (city && category === undefined) {
-            const { rows } = await client.query(
+            const { rows } = await client.query<Places>(
                 "SELECT places_id, category, image_url FROM places WHERE city = $1",
                 [city]
             );
             response.status(200).send(rows);
         } else if (category && city) {
-            const { rows } = await client.query(
+            const { rows } = await client.query<Places>(
                 "SELECT * FROM places WHERE category = $1 AND city = $2",
                 [category, city]
             );
             response.status(200).send(rows);
         } else if (category && city === undefined) {
-            const { rows } = await client.query(
+            const { rows } = await client.query<Places>(
                 "SELECT * FROM places WHERE category = $1",
                 [category]
             );
             response.status(200).send(rows);
         } else {
-            const { rows } = await client.query("SELECT * FROM places");
+            const { rows } = await client.query<Places>("SELECT * FROM places");
             response.status(200).send(rows);
         }
     } catch (error) {
@@ -106,11 +109,10 @@ app.get("/jj/places/:id", async (request: Request, response: Response) => {
     try {
         const placeId = request.params.id;
 
-        const { rows } = await client.query(
+        const { rows } = await client.query<Places>(
             "SELECT * FROM places WHERE places_id = $1",
             [placeId]
         );
-        console.log(rows, "placeId");
 
         response.status(200).send(rows[0]);
     } catch (error) {
@@ -122,13 +124,12 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
     try {
         const userId = request.params.id;
 
-        const { rows } = await client.query(
+        const { rows } = await client.query<Favourites>(
             `SELECT p.* FROM favourites f
 			JOIN places p ON f.place_id = p.places_id
 			WHERE f.user_id = $1`,
             [userId]
         );
-        console.log(rows, "userId");
 
         response.status(200).send(rows);
     } catch (error) {
@@ -142,14 +143,12 @@ app.post("/jj/reviews", async (request: Request, response: Response) => {
         let placeId: number = request.body.place_id;
         let rating: number = request.body.rating;
         let comment: string = request.body.comment;
-        const reviews: Reviews = await client.query("SELECT * FROM reviews");
 
         if (rating !== null && comment !== null) {
             await client.query(
                 "INSERT INTO reviews (user_id, place_id, rating, comment) VALUES ($1, $2, $3, $4)",
                 [userId, placeId, rating, comment]
             );
-            console.log("lyckat");
             response.status(201).send("Created");
         } else {
             response.status(400).send("Bad Request");
@@ -163,11 +162,10 @@ app.get("/jj/reviews/:id", async (request: Request, response: Response) => {
     try {
         const reviewId = request.params.id;
 
-        const { rows } = await client.query(
+        const { rows } = await client.query<Reviews>(
             `SELECT r.*, p.* FROM reviews r JOIN places p ON r.place_id = p.places_id WHERE r.reviews_id = $1`,
             [reviewId]
         );
-        console.log(rows, "reviewId");
 
         response.status(200).send(rows[0]);
     } catch (error) {
@@ -178,20 +176,20 @@ app.get("/jj/reviews/:id", async (request: Request, response: Response) => {
 app.get(
     "/jj/profile/reviews/",
     async (request: Request, response: Response) => {
-        const token = request.cookies.token;
+        const token: string = request.cookies.token;
         if (!token) {
             response.status(401).send("Unauthorized");
             return;
         }
 
         try {
-            const users = await client.query(
+            const users = await client.query<Tokens>(
                 "SELECT user_id FROM tokens WHERE token = $1",
                 [token]
             );
             const user = users.rows[0].user_id;
 
-            const { rows } = await client.query(
+            const { rows } = await client.query<Reviews>(
                 `SELECT p.*, r.reviews_id FROM reviews r
 			JOIN places p ON r.place_id = p.places_id
 			WHERE r.user_id = $1`,
@@ -206,14 +204,14 @@ app.get(
     }
 );
 app.get("/jj/profile", async (request: Request, response: Response) => {
-    const token = request.cookies.token;
+    const token: string = request.cookies.token;
     if (!token) {
         response.status(401).send("Unauthorized");
         return;
     }
 
     try {
-        const { rows } = await client.query(
+        const { rows } = await client.query<Users>(
             "SELECT * FROM users JOIN tokens ON users.users_id = tokens.user_id WHERE tokens.token = $1",
             [token]
         );
@@ -223,7 +221,7 @@ app.get("/jj/profile", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
-app.post("/jj/login", async (request: Request, response: Response) => {
+app.post("/jj/login", async (request: Request<{}, {}, LoginInfo>, response: Response) => {
     const { email, password } = request.body;
 
     if (!email || !password) {
@@ -232,12 +230,11 @@ app.post("/jj/login", async (request: Request, response: Response) => {
     }
 
     try {
-        const userSearch = await client.query(
+        const userSearch = await client.query<Users>(
             "SELECT * FROM users WHERE email = $1 AND password = $2",
             [email, password]
         );
         const user = userSearch.rows[0];
-        console.log(user.users_id, "user.id");
 
         if (!user) {
             response.status(401).send("Unauthorized");
@@ -249,7 +246,6 @@ app.post("/jj/login", async (request: Request, response: Response) => {
             "INSERT INTO tokens (user_id, token) VALUES ($1, $2)",
             [user.users_id, token]
         );
-        console.log(token, "token har lagts till");
 
         response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
         response.status(200).send({
@@ -262,7 +258,7 @@ app.post("/jj/login", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
-app.post("/jj/signup", async (request: Request, response: Response) => {
+app.post("/jj/signup", async (request: Request<{}, {}, LoginInfo>, response: Response) => {
     const { username, email, password } = request.body;
 
     if (!username || !email || !password) {
@@ -282,21 +278,20 @@ app.post("/jj/signup", async (request: Request, response: Response) => {
     }
 });
 app.post("/jj/logout", async (request: Request, response: Response) => {
-    const token = request.cookies.token;
+    const token: string = request.cookies.token;
     if (token) {
-        const findToken = await client.query(
+        const findToken = await client.query<Tokens>(
             "SELECT * FROM tokens WHERE token = $1",
             [token]
         );
-        console.log(token, "found token account");
 
         if (findToken.rows.length > 0) {
-            const logout = await client.query(
+            const logout = await client.query<Tokens>(
                 "DELETE FROM tokens WHERE token = $1",
                 [token]
             );
             response.clearCookie("token");
-            response.send("logged out");
+            response.send(logout);
         } else {
             response.status(401).send("Unauthorized");
         }
