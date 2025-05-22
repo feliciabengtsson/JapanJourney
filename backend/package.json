@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "Labb2-fullstack",
   "dependencies": {
+    "@types/pg": "^8.15.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",

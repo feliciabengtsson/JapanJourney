@@ -1,22 +1,20 @@
 /* https://dev.to/achukka/add-postgresql-to-express-server-2f0k */
-/* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe 
+/* https://dev.to/brettfishy/the-easiest-way-to-use-query-parameters-in-react-1ioe
 https://dev.to/alexmercedcoder/expressjs-handling-cross-origin-cookies-38l9
 https://www.postgresql.org/docs/current/tutorial-join.html
-https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c*/
+https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c
+https://www.npmjs.com/package/@types/pg*/
 import cors from "cors";
 import express, { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import cookieParser from "cookie-parser";
-import { request } from "http";
-const dotenv = require("dotenv"),
-    { Client } = require("pg");
-
+import dotenv from "dotenv";
+import { Client } from "pg";
 dotenv.config();
 
 const client = new Client({
     connectionString: process.env.PGURI,
 });
-
 client.connect();
 
 const app = express();
@@ -32,8 +30,37 @@ app.use(express.json());
 app.use(cookieParser());
 
 interface Reviews {
+    reviews_id: number,
+    user_id: number,
+    place_id: number,
     rating: number;
     comment: string;
+}
+interface Users {
+    users_id: number,
+    username: string,
+    email: string,
+    password: string;
+}
+interface Places {
+    places_id?: number,
+    name?: string,
+    region?: string,
+    city?: string;
+    category?: string;
+    description?: string;
+    image_url?: string;
+    avg_rating?: number;
+    lat?: number;
+    lon?: number;
+}
+interface Favourites {
+    user_id: number,
+    place_id: number,
+}
+interface Tokens {
+    user_id: number,
+    token: string,
 }
 
 app.get("/jj/places", async (request: Request, response: Response) => {
@@ -42,6 +69,7 @@ app.get("/jj/places", async (request: Request, response: Response) => {
         console.log(region);
 
         if (region) {
+            //any
             const { rows } = await client.query(
                 "SELECT * FROM places WHERE region = $1",
                 [region]
@@ -95,8 +123,8 @@ app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
         const userId = request.params.id;
 
         const { rows } = await client.query(
-            `SELECT p.* FROM favourites f 
-			JOIN places p ON f.place_id = p.places_id 
+            `SELECT p.* FROM favourites f
+			JOIN places p ON f.place_id = p.places_id
 			WHERE f.user_id = $1`,
             [userId]
         );
@@ -164,8 +192,8 @@ app.get(
             const user = users.rows[0].user_id;
 
             const { rows } = await client.query(
-                `SELECT p.*, r.reviews_id FROM reviews r 
-			JOIN places p ON r.place_id = p.places_id 
+                `SELECT p.*, r.reviews_id FROM reviews r
+			JOIN places p ON r.place_id = p.places_id
 			WHERE r.user_id = $1`,
                 [user]
             );
