@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { Client } from "pg";
+import { STATUS_CODES } from "http";
 dotenv.config();
 
 const client = new Client({
@@ -30,22 +31,22 @@ app.use(express.json());
 app.use(cookieParser());
 
 interface Reviews {
-    reviews_id: number,
-    user_id: number,
-    place_id: number,
+    reviews_id: number;
+    user_id: number;
+    place_id: number;
     rating: number;
     comment: string;
 }
 interface Users {
-    users_id: number,
-    username: string,
-    email: string,
+    users_id: number;
+    username: string;
+    email: string;
     password: string;
 }
 interface Places {
-    places_id: number,
-    name: string,
-    region: string,
+    places_id: number;
+    name: string;
+    region: string;
     city: string;
     category: string;
     description: string;
@@ -55,17 +56,17 @@ interface Places {
     lon: number;
 }
 interface Favourites {
-    user_id: number,
-    place_id: number,
+    user_id: number;
+    place_id: number;
 }
 interface Tokens {
-    user_id: number,
-    token: string,
+    user_id: number;
+    token: string;
 }
 interface LoginInfo {
-    username: string,
-	email: string,
-    password: string,
+    username: string;
+    email: string;
+    password: string;
 }
 
 app.get("/jj/places", async (request: Request, response: Response) => {
@@ -77,10 +78,15 @@ app.get("/jj/places", async (request: Request, response: Response) => {
                 "SELECT * FROM places WHERE region = $1",
                 [region]
             );
-            response.status(200).send(rows);
+
+            if (rows.length === 0) {
+                response.status(404).send({ STATUS_CODES: 404 });
+            } else {
+                response.status(200).send(rows);
+            }
         } else if (city && category === undefined) {
             const { rows } = await client.query<Places>(
-                "SELECT places_id, category, image_url FROM places WHERE city = $1",
+                "SELECT * FROM places WHERE city = $1",
                 [city]
             );
             response.status(200).send(rows);
@@ -221,62 +227,68 @@ app.get("/jj/profile", async (request: Request, response: Response) => {
         response.status(500).send("error");
     }
 });
-app.post("/jj/login", async (request: Request<{}, {}, LoginInfo>, response: Response) => {
-    const { email, password } = request.body;
+app.post(
+    "/jj/login",
+    async (request: Request<{}, {}, LoginInfo>, response: Response) => {
+        const { email, password } = request.body;
 
-    if (!email || !password) {
-        response.status(400).send("Bad Request");
-        return;
-    }
-
-    try {
-        const userSearch = await client.query<Users>(
-            "SELECT * FROM users WHERE email = $1 AND password = $2",
-            [email, password]
-        );
-        const user = userSearch.rows[0];
-
-        if (!user) {
-            response.status(401).send("Unauthorized");
+        if (!email || !password) {
+            response.status(400).send("Bad Request");
             return;
         }
 
-        const token = uuidv4();
-        await client.query(
-            "INSERT INTO tokens (user_id, token) VALUES ($1, $2)",
-            [user.users_id, token]
-        );
+        try {
+            const userSearch = await client.query<Users>(
+                "SELECT * FROM users WHERE email = $1 AND password = $2",
+                [email, password]
+            );
+            const user = userSearch.rows[0];
 
-        response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
-        response.status(200).send({
-            users_id: user.users_id,
-            username: user.username,
-            email: user.email,
-        });
-    } catch (error) {
-        console.error(error);
-        response.status(500).send("error");
-    }
-});
-app.post("/jj/signup", async (request: Request<{}, {}, LoginInfo>, response: Response) => {
-    const { username, email, password } = request.body;
+            if (!user) {
+                response.status(401).send("Unauthorized");
+                return;
+            }
 
-    if (!username || !email || !password) {
-        response.status(400).send("Bad Request");
-        return;
-    }
+            const token = uuidv4();
+            await client.query(
+                "INSERT INTO tokens (user_id, token) VALUES ($1, $2)",
+                [user.users_id, token]
+            );
 
-    try {
-        await client.query(
-            "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
-            [username, email, password]
-        );
-        response.status(201).send("success");
-    } catch (error) {
-        console.error(error);
-        response.status(500).send("error");
+            response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
+            response.status(200).send({
+                users_id: user.users_id,
+                username: user.username,
+                email: user.email,
+            });
+        } catch (error) {
+            console.error(error);
+            response.status(500).send("error");
+        }
     }
-});
+);
+app.post(
+    "/jj/signup",
+    async (request: Request<{}, {}, LoginInfo>, response: Response) => {
+        const { username, email, password } = request.body;
+
+        if (!username || !email || !password) {
+            response.status(400).send("Bad Request");
+            return;
+        }
+
+        try {
+            await client.query(
+                "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
+                [username, email, password]
+            );
+            response.status(201).send("success");
+        } catch (error) {
+            console.error(error);
+            response.status(500).send("error");
+        }
+    }
+);
 app.post("/jj/logout", async (request: Request, response: Response) => {
     const token: string = request.cookies.token;
     if (token) {

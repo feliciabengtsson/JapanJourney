@@ -20,13 +20,12 @@ function MainContainer() {
         "/places/:id",
         "/reviews/:id",
         "/places/:id/reviews/add",
-		"/explore"
     ];
+    const smallPaths: string[] = ["/profile", "/explore"];
     const hideComponent = location.pathname === "/";
-    const small = matchPath("/profile", location.pathname);
-    const medium = mediumPaths.find((path) =>
-        matchPath(path, location.pathname)
-    );
+    const small = smallPaths.find((path) => matchPath(path, location.pathname));
+
+    const medium = mediumPaths.find((path) => matchPath(path, location.pathname));
 
     return (
         <Fragment>
