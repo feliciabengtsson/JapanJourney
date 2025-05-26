@@ -5,6 +5,7 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "concurrently \"nodemon index.js\" \"npx tsc --watch\"",
+	"start": "node dist/server.js",
 	"build-frontend": "npm run --prefix ../frontend build && rm -Rf dist && mv ../frontend/dist .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
