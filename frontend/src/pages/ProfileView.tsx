@@ -22,7 +22,7 @@ const Profilewrapper = styled.div`
     align-items: center;
     justify-content: space-evenly;
 `;
-const ContentCard = styled.div<{ bgImg: string }>`
+const ContentCard = styled.div<{ $bgImg: string }>`
     position: relative;
     display: flex;
     justify-content: center;
@@ -30,7 +30,7 @@ const ContentCard = styled.div<{ bgImg: string }>`
     width: 75vw;
     height: 20vh;
     border-radius: 1rem;
-    background: url(${(props) => props.bgImg});
+    background: url(${(props) => props.$bgImg});
     background-size: cover;
     margin: 2rem auto;
 `;
@@ -97,7 +97,7 @@ function ProfileView() {
                     <Header>{user.username}</Header>
                     <Profilewrapper>
                         <Link to={`/profile/${user.users_id}/favourites`}>
-                            <ContentCard bgImg={favouriteImg}>
+                            <ContentCard $bgImg={favouriteImg}>
                                 <ProfileWhite>
                                     <ProfileText>Favourites</ProfileText>
                                 </ProfileWhite>
@@ -107,7 +107,7 @@ function ProfileView() {
                             </ContentCard>
                         </Link>
                         <Link to={`/reviews`}>
-                            <ContentCard bgImg={reviewsImg}>
+                            <ContentCard $bgImg={reviewsImg}>
                                 <ProfileWhite>
                                     <ProfileText>Reviews</ProfileText>
                                 </ProfileWhite>
