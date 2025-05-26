@@ -127,17 +127,73 @@ app.get("/jj/places/:id", async (request: Request, response: Response) => {
     }
 });
 app.get("/jj/favourites/:id", async (request: Request, response: Response) => {
+    const token: string = request.cookies.token;
+    if (!token) {
+        response.status(401).send("Unauthorized");
+        return;
+    }
     try {
-        const userId = request.params.id;
+        const placeId: string = request.params.id;
+
+        const users = await client.query<Tokens>(
+            "SELECT user_id FROM tokens WHERE token = $1",
+            [token]
+        );
+        const userId = users.rows[0].user_id;
 
         const { rows } = await client.query<Favourites>(
             `SELECT p.* FROM favourites f
 			JOIN places p ON f.place_id = p.places_id
-			WHERE f.user_id = $1`,
-            [userId]
+			WHERE f.user_id = $1 AND f.place_id = $2`,
+            [userId, placeId]
         );
 
         response.status(200).send(rows);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("error");
+    }
+});
+app.delete(
+    "/jj/favourites/:id",
+    async (request: Request, response: Response) => {
+        const placeId: string = request.params.id;
+        try {
+            await client.query("DELETE FROM favourites WHERE place_id = $1", [
+                placeId,
+            ]);
+            response.status(200).send({ STATUS_CODES: 201 });
+        } catch (error) {
+            console.error(error);
+            response.status(500).send("error");
+        }
+    }
+);
+app.post("/jj/favourites", async (request: Request, response: Response) => {
+    const token: string = request.cookies.token;
+    if (!token) {
+        response.status(401).send("Unauthorized");
+        return;
+    }
+
+    try {
+        const placeId: number = request.body.place_id;
+
+        const users = await client.query<Tokens>(
+            "SELECT user_id FROM tokens WHERE token = $1",
+            [token]
+        );
+        const userId = users.rows[0].user_id;
+
+        if (placeId !== null && userId !== null) {
+            await client.query(
+                "INSERT INTO favourites (user_id, place_id) VALUES ($1, $2)",
+                [userId, placeId]
+            );
+            response.status(201).send({ STATUS_CODES: 201 });
+        } else {
+            response.status(400).send("Bad Request");
+        }
     } catch (error) {
         console.error(error);
         response.status(500).send("error");
@@ -254,7 +310,7 @@ app.post(
                 "INSERT INTO tokens (user_id, token) VALUES ($1, $2)",
                 [user.users_id, token]
             );
-
+            console.log(token, "token created");
             response.cookie("token", token, { maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
             response.status(200).send({
                 users_id: user.users_id,

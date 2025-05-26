@@ -1,3 +1,5 @@
+/* https://stackoverflow.com/questions/67691606/how-to-change-color-button-onclick-react-js 
+https://stackabuse.com/how-to-style-hover-in-react/*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
@@ -7,8 +9,8 @@ const SakuraSVGIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        width={30}
-        height={30}
+        width={40}
+        height={40}
         color={"var(--color-neutral-light)"}
         fill={"none"}
         {...props}
@@ -52,9 +54,6 @@ const StyledSakuraIcon = styled(SakuraSVGIcon)`
     right: 1rem;
     top: 1rem;
     color: var(--color-neutral-light);
-    &:hover {
-        fill: var(--color-primary-medium);
-    }
 `;
 const ContentContainer = styled.div`
     width: 80vw;
@@ -125,6 +124,8 @@ function PlaceDetail() {
         lat: 0,
         lon: 0,
     });
+    const [isFavourite, setIsFavourite] = useState(false);
+    const [isHover, setIsHover] = useState(false);
 
     useEffect(() => {
         if (placeId !== undefined) {
@@ -137,6 +138,18 @@ function PlaceDetail() {
                     setPlace(data);
                 });
         }
+
+        fetch(`http://localhost:8080/jj/favourites/${placeId}`, {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data, "favorite");
+                if (data.length > 0) {
+                    setIsFavourite(data);
+                }
+            });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -171,8 +184,6 @@ function PlaceDetail() {
                 ></i>
             );
         }
-
-        console.log(circles, "circles");
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
             circles.push(
@@ -183,14 +194,56 @@ function PlaceDetail() {
                         color: "var(--color-secondary)",
                     }}
                     className="fa-regular fa-circle"
+                    key={circles.length++}
                 ></i>
             );
         }
         return circles;
     };
-    const handleFavourite = () => {
-		console.log('add favourite')
-	};
+    const handleMouseEnter = () => {
+        setIsHover(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHover(false);
+    };
+    const handleFavourite = async () => {
+        if (!isFavourite) {
+            setIsFavourite(true);
+            console.log("add favourite");
+            const favouriteForm = {
+                place_id: id,
+            };
+
+            await fetch("http://localhost:8080/jj/favourites", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(favouriteForm),
+            });
+        } else {
+            setIsFavourite(false);
+            console.log("remove favourite");
+
+            try {
+                const response = await fetch(
+                    `http://localhost:8080/jj/favourites/${id}`,
+                    {
+                        method: "DELETE",
+                    }
+                );
+                if (response.ok) {
+                    console.log("DELETE");
+                } else {
+                    console.error("failed delete");
+                }
+            } catch (error) {
+                console.error("error", error);
+            }
+        }
+    };
+
     return (
         <Fragment>
             <Detailswrapper>
@@ -201,7 +254,17 @@ function PlaceDetail() {
                             src={place.image_url}
                             alt="Place cover image"
                         />
-                        <StyledSakuraIcon onClick={handleFavourite} />
+                        <StyledSakuraIcon
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={handleFavourite}
+                            style={{
+                                fill:
+                                    isFavourite || isHover
+                                        ? "var(--color-primary-medium)"
+                                        : "none",
+                            }}
+                        />
                     </ImageWrapper>
                 )}
                 <ContentContainer>
