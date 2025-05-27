@@ -167,7 +167,7 @@ function CreateAccountModal(props: Signup) {
                             <LoginBtn
                                 onClick={props.toggleSignup}
                                 type="submit"
-                                value="Signup"
+                                value="Sign up"
                             />
                         </Form>
                     </ModalWrapper>

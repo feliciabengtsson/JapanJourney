@@ -70,6 +70,12 @@ const LoginRed = styled.div`
     @media (min-width: 1200px) {
         right: 33rem;
     }
+	@media (min-width: 1430px) {
+        right: 39rem;
+    }
+	@media (min-width: 1630px) {
+        right: 46rem;
+    }
 `;
 const IconArrow = styled.i`
     font-size: 3.5rem;
@@ -82,7 +88,7 @@ const CreateAccount = styled.p`
     color: var(--color-neutral-light);
 `;
 const CreateLink = styled.span`
-    color: var(--color-accent-light);
+    color: var(--color-primary-light);
     cursor: pointer;
 `;
 

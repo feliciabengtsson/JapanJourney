@@ -26,6 +26,21 @@ const GlobalStyle = createGlobalStyle`
 		min-width: 320px;
 		font-family: Poppins;
 		font-style: normal;
+		@media (min-width: 600px) {
+			background: url('/images/background-md.jpg');
+			background-size: cover;
+			background-position: center;
+		}
+		@media (min-width: 980px) {
+			background: url('/images/background-lg.jpg');
+			background-size: cover;
+			background-position: center;
+		}
+		@media (min-width: 1200px) {
+			background: url('/images/background-original.jpg');
+			background-size: cover;
+			background-position: center;
+		}
 	}
 	h1 {
 		color: var(--color-neutral-dark);
