@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
 	--color-neutral-light: #FFFFFF;
 	--color-neutral-dark: #333333;
 	--color-neutral-grey: #CCCCCC;
-	
+
 	--color-primary-light: #FFC4B2;
 	--color-primary-medium: #FF907C;
 	--color-secondary: #921613;
@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 	* {
 	box-sizing: border-box;
 	color: var(--color-neutral-dark);
-	}  
+	}
 	body {
 		margin: 0;
 		background: url('/images/background-sm.jpg');
@@ -54,10 +54,10 @@ const GlobalStyle = createGlobalStyle`
 		&:hover {
 			color: var(--color-accent);
 			cursor: pointer;
-		} 
+		}
 		&:visited {
 			color: var(--color-secondary);
-		} 
+		}
 	}
 	a {
 		color: var(--color-neutral-light);

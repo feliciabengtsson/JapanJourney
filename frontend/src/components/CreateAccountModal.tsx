@@ -15,9 +15,9 @@ const ModalContainer = styled.div`
 `;
 const ModalWrapper = styled.div`
     display: block;
-    background: rgba(255, 196, 178, 0.61);
+    background: rgba(255, 196, 178, 0.90);
     width: 70%;
-    max-width: 800px;
+    max-width: 600px;
     height: fit-content;
     padding: 0.5rem 1rem 1rem;
     border-radius: 1rem;
@@ -56,7 +56,8 @@ const LoginBtn = styled.input`
     width: 7rem;
     height: 2.5rem;
     border-radius: 3rem;
-    background: var(--color-accent-light);
+    background: var(--color-secondary);
+    color: var(--color-neutral-light);
     border: none;
     font-family: Poppins;
     font-size: 1.2rem;
