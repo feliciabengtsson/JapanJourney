@@ -55,6 +55,18 @@ const LoginRed = styled.div`
     background: var(--color-secondary);
     text-align: center;
     cursor: pointer;
+    @media (min-width: 480px) {
+        right: 9rem;
+    }
+    @media (min-width: 600px) {
+        right: 13rem;
+    }
+    @media (min-width: 770px) {
+        right: 18rem;
+    }
+    @media (min-width: 980px) {
+        right: 26rem;
+    }
 `;
 const IconArrow = styled.i`
     font-size: 3.5rem;

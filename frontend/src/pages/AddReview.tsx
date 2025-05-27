@@ -2,7 +2,7 @@
  https://js.devexpress.com/React/Documentation/20_2/Guide/UI_Components/TextArea/Handle_the_Value_Change_Event/
  https://www.dhiwise.com/post/how-to-handle-multi-line-text-input-with-react-textarea
 */
-/* https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f 
+/* https://dev.to/annaqharder/how-to-make-star-rating-in-react-2e6f
 https://github.com/smastrom/react-rating*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
@@ -60,6 +60,8 @@ const TextArea = styled.textarea`
     border: none;
     border-radius: 2.5rem;
     padding: 0.5rem;
+    @media (min-width: 480px) {
+    }
     @media (min-width: 890px) {
     }
 `;

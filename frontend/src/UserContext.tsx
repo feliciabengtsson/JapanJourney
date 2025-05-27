@@ -1,4 +1,4 @@
-/* https://medium.com/@katherinewest285/user-authentication-made-easy-usecontext-cc79b5a3ce82 
+/* https://medium.com/@katherinewest285/user-authentication-made-easy-usecontext-cc79b5a3ce82
 https://legacy.reactjs.org/docs/hooks-reference.html#usecontext*/
 import { createContext, useState, type ReactNode } from "react";
 

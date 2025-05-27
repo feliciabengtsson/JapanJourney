@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 import { useContext } from "react";
 
@@ -77,7 +77,26 @@ interface Nav {
 }
 
 function SideNav(props: Nav) {
+    const navigate = useNavigate();
     const { logout } = useContext(UserContext);
+    const handleLogout = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/jj/logout", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            console.log(response, 'response logout')
+            if (response.ok) {
+                console.log('lyckad utloggning')
+                navigate("/"); /// Redirect to new page
+            }
+        } catch (error) {
+            console.error("error", error);
+        }
+    };
 
     return (
         <Fragment>
@@ -115,6 +134,7 @@ function SideNav(props: Nav) {
                                 onClick={() => {
                                     props.toggle();
                                     logout();
+                                    handleLogout();
                                 }}
                             >
                                 Logout
