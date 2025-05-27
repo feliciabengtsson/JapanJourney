@@ -362,7 +362,6 @@ app.post('/jj/logout', async (request: Request, response: Response) => {
                 [token]
             )
             response.clearCookie('token')
-            console.log(request.cookies.token, 'token borttagen')
             response.send(logout)
         } else {
             response.status(401).send('Unauthorized')
