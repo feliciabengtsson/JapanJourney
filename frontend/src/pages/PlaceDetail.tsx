@@ -1,4 +1,4 @@
-/* https://stackoverflow.com/questions/67691606/how-to-change-color-button-onclick-react-js 
+/* https://stackoverflow.com/questions/67691606/how-to-change-color-button-onclick-react-js
 https://stackabuse.com/how-to-style-hover-in-react/*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
@@ -54,6 +54,7 @@ const StyledSakuraIcon = styled(SakuraSVGIcon)`
     right: 1rem;
     top: 1rem;
     color: var(--color-neutral-light);
+    cursor: pointer;
 `;
 const ContentContainer = styled.div`
     width: 80vw;
