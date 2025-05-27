@@ -50,6 +50,7 @@ const NavLinks = styled(Link)`
     text-decoration: none;
     margin-top: 1rem;
     z-index: 10000;
+    color: var(--color-neutral-dark);
     &:hover {
         color: var(--color-secondary);
     }
