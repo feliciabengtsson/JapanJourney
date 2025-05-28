@@ -17,7 +17,10 @@ import path from 'path'
 dotenv.config()
 
 const client = new Client({
-    connectionString: process.env.PGURI
+    connectionString: process.env.PGURI,
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 client.connect()
 
@@ -157,7 +160,9 @@ app.get('/api/favourites/:id', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.delete('/api/favourites/:id', async (request: Request, response: Response) => {
+app.delete(
+    '/api/favourites/:id',
+    async (request: Request, response: Response) => {
         const placeId: string = request.params.id
         try {
             await client.query('DELETE FROM favourites WHERE place_id = $1', [
@@ -236,7 +241,9 @@ app.get('/api/reviews/:id', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.get('/api/profile/reviews/', async (request: Request, response: Response) => {
+app.get(
+    '/api/profile/reviews/',
+    async (request: Request, response: Response) => {
         const token: string = request.cookies.token
         if (!token) {
             response.status(401).send('Unauthorized')
@@ -282,7 +289,9 @@ app.get('/api/profile', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.post('/api/login', async (request: Request<object, object, LoginInfo>, response: Response) => {
+app.post(
+    '/api/login',
+    async (request: Request<object, object, LoginInfo>, response: Response) => {
         const { email, password } = request.body
 
         if (!email || !password) {
@@ -320,7 +329,9 @@ app.post('/api/login', async (request: Request<object, object, LoginInfo>, respo
         }
     }
 )
-app.post('/api/signup', async (request: Request<object, object, LoginInfo>, response: Response) => {
+app.post(
+    '/api/signup',
+    async (request: Request<object, object, LoginInfo>, response: Response) => {
         const { username, email, password } = request.body
 
         if (!username || !email || !password) {
