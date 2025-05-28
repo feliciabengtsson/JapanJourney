@@ -51,7 +51,6 @@ VALUES
 ('sakura123', 'sakura@example.com', 'hashed_pw1'),
 ('travelerjoe', 'joe@example.com', 'hashed_pw2'),
 ('miyuki', 'miyuki@example.com', 'hashed_pw3');
-SELECT * FROM users;
 
 INSERT INTO places (name, region, city, category, description, image_url, avg_rating, lat, lon)
 VALUES 
@@ -118,19 +117,16 @@ VALUES
 ('Sapporo Snow Festival', 'Hokkaido', 'Sapporo', 'Events',
  'Annual winter event with huge snow and ice sculptures.',
  'https://gaijinpot.scdn3.secure.raxcdn.com/app/uploads/sites/6/2018/02/Sapporo-1024x680-1024x680.jpg', 4.9, 43.0618, 141.3545);
-SELECT * FROM places;
 
 INSERT INTO reviews (user_id, place_id, rating, comment)
 VALUES 
 (1, 1, 5, 'Magiskt! Torii-portarna var fantastiska.'),
 (2, 2, 5, 'Så mäktig vy från toppen. Rekommenderas.'),
 (3, 3, 4, 'Bra shopping men lite för mycket folk.');
-SELECT * FROM reviews;
 
 INSERT INTO favourites (user_id, place_id)
 VALUES 
 (1, 2), -- sakura123 gillar Fuji
 (2, 1), -- joe gillar Fushimi Inari
 (3, 3); -- miyuki gillar Akihabara
-SELECT * FROM favourites;
 
