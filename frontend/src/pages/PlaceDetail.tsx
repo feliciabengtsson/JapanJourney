@@ -59,6 +59,7 @@ const StyledSakuraIcon = styled(SakuraSVGIcon)`
 const ContentContainer = styled.div`
     width: 80vw;
     margin: auto;
+    max-width: 35rem;
 `;
 const ContentWrapper = styled.div`
     display: flex;
@@ -73,6 +74,10 @@ const Icon = styled.i`
     font-size: 1rem;
     font-weight: 800;
     margin-right: 0.3rem;
+    @media (min-width: 600px) {
+        font-size: 1.5rem;
+        margin: 0.5rem 0.5rem 0;
+    }
 `;
 const ReviewLink = styled(Link)`
     font-size: 0.8rem;
@@ -81,7 +86,8 @@ const ReviewLink = styled(Link)`
     &:hover {
         color: var(--color-neutral-light);
     }
-    @media (min-width: 890px) {
+    @media (min-width: 600px) {
+        font-size: 1rem;
     }
 `;
 const PlaceName = styled.h3`
@@ -89,12 +95,21 @@ const PlaceName = styled.h3`
     font-size: 1.3rem;
     font-weight: 400;
     margin: 1rem 0 0.3rem;
+    @media (min-width: 600px) {
+        font-size: 1.7rem;
+    }
 `;
 const PlaceDescription = styled.span`
     margin: 0.2rem 0;
+    @media (min-width: 600px) {
+        font-size: 1.2rem;
+    }
 `;
 const PlaceRating = styled.span`
     margin: 0.5rem;
+    @media (min-width: 600px) {
+        font-size: 1.2rem;
+    }
 `;
 
 interface PlaceType {
@@ -106,8 +121,6 @@ interface PlaceType {
     description: string;
     image_url: string;
     avg_rating: number;
-    lat: number;
-    lon: number;
 }
 
 function PlaceDetail() {
@@ -121,16 +134,14 @@ function PlaceDetail() {
         category: "",
         description: "",
         image_url: "",
-        avg_rating: 0,
-        lat: 0,
-        lon: 0,
+        avg_rating: 0
     });
     const [isFavourite, setIsFavourite] = useState(false);
     const [isHover, setIsHover] = useState(false);
 
     useEffect(() => {
         if (placeId !== undefined) {
-            fetch(`api/places/${placeId}`, {
+            fetch(`/api/places/${placeId}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -140,7 +151,7 @@ function PlaceDetail() {
                 });
         }
 
-        fetch(`api/favourites/${placeId}`, {
+        fetch(`/api/favourites/${placeId}`, {
             method: "GET",
             credentials: "include",
         })
@@ -215,7 +226,7 @@ function PlaceDetail() {
                 place_id: id,
             };
 
-            await fetch("api/favourites", {
+            await fetch("/api/favourites", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -228,12 +239,9 @@ function PlaceDetail() {
             console.log("remove favourite");
 
             try {
-                const response = await fetch(
-                    `api/favourites/${id}`,
-                    {
-                        method: "DELETE",
-                    }
-                );
+                const response = await fetch(`/api/favourites/${id}`, {
+                    method: "DELETE",
+                });
                 if (response.ok) {
                     console.log("DELETE");
                 } else {

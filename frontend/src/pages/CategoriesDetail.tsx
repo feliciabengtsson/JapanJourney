@@ -25,6 +25,7 @@ const ContentCard = styled.div`
     justify-content: center;
     align-items: baseline;
     width: 75vw;
+	max-width: 25rem;
     height: 20vh;
     border-radius: 1rem;
     background: lightblue;
@@ -60,6 +61,9 @@ const FavouriteRed = styled.div`
     background: var(--color-secondary);
     text-align: center;
     cursor: pointer;
+    @media (min-width: 600px) {
+        right: 7rem;
+    }
 `;
 const IconArrow = styled.i`
     font-size: 1.8rem;
@@ -95,7 +99,7 @@ function CategoriesDetail() {
     const [cities, setCities] = useState<PlaceType[]>([]);
 
     useEffect(() => {
-        fetch(`api/places?${params}`, {
+        fetch(`/api/places?${params}`, {
             method: "GET",
             credentials: "include",
         })
@@ -120,6 +124,7 @@ function CategoriesDetail() {
                                     key={city.places_id}
                                     style={{
                                         backgroundImage: `url(${city.image_url})`,
+                                        backgroundSize: "cover"
                                     }}
                                 >
                                     <FavouriteWhite>
@@ -137,9 +142,7 @@ function CategoriesDetail() {
                 </FavouriteContainer>
             ) : (
                 <FavouriteContainer>
-                    <Header>
-                        {category}
-                    </Header>
+                    <Header>{category}</Header>
                     <Favouritewrapper>
                         {cities.map((city) => (
                             <Link to={`/places/${city.places_id}`}>

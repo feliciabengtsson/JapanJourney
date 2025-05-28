@@ -27,6 +27,7 @@ const ContentCard = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 79vw;
+    max-width: 40rem;
     height: 14vh;
     border-radius: 3rem;
     background: var(--color-neutral-light);
@@ -50,6 +51,12 @@ const Image = styled.img`
     height: inherit;
     border-radius: 0 3rem 3rem 0;
     object-fit: cover;
+    @media (min-width: 600px) {
+        width: 16rem;
+    }
+    @media (min-width: 980px) {
+        width: 21rem;
+    }
 `;
 
 interface PlaceType {
@@ -77,7 +84,7 @@ function SearchDetails() {
     const [cities, setCities] = useState<PlaceType[]>([]);
 
     useEffect(() => {
-        fetch(`api/places?${params}`, {
+        fetch(`/api/places?${params}`, {
             method: "GET",
             credentials: "include",
         })
@@ -86,7 +93,7 @@ function SearchDetails() {
                 console.log(result, "fetched places");
                 setCities(result);
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -95,7 +102,9 @@ function SearchDetails() {
                 <Header>{city}</Header>
                 <SearchWrapper>
                     {cities.map((city) => (
-                        <Link to={`/categories?${params}&category=${city.category}`}>
+                        <Link
+                            to={`/categories?${params}&category=${city.category}`}
+                        >
                             <ContentCard key={city.places_id}>
                                 <TextWrapper>
                                     <p>{city.category}</p>

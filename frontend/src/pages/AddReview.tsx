@@ -123,7 +123,7 @@ function AddReview() {
         };
 
         try {
-            await fetch("api/reviews", {
+            await fetch("/api/reviews", {
                 method: "POST",
                 credentials: "include",
                 headers: {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const FavouriteContainer = styled.div`
     width: 100vw;
@@ -25,6 +25,7 @@ const ContentCard = styled.div`
     justify-content: center;
     align-items: baseline;
     width: 75vw;
+    max-width: 25rem;
     height: 20vh;
     border-radius: 1rem;
     background: lightblue;
@@ -60,6 +61,10 @@ const FavouriteRed = styled.div`
     background: var(--color-secondary);
     text-align: center;
     cursor: pointer;
+    @media (min-width: 600px) {
+        right: 7rem;
+        bottom: 1rem;
+    }
 `;
 const IconArrow = styled.i`
     font-size: 1.8rem;
@@ -81,21 +86,17 @@ interface Places {
 }
 
 function FavouritesView() {
-    const { id } = useParams();
     const [favourites, setFavourites] = useState<Places[]>([]);
 
     useEffect(() => {
-        if (id !== undefined) {
-            fetch(`api/favourites/${id}`, {
-                method: "GET",
-                credentials: "include",
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    setFavourites(data);
-                });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        fetch(`/api/favourites`, {
+            method: "GET",
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setFavourites(data);
+            });
     }, []);
 
     return (

@@ -62,8 +62,11 @@ const GlobalStyle = createGlobalStyle`
 	}
 	p {
 		color: var(--color-neutral-dark);
-		font-size: 16px;
+		font-size: 1rem;
 		font-weight: 400;
+		@media (min-width: 600px) {
+        	font-size: 1.2rem;
+    	}
 	}
  	i {
 		&:hover {

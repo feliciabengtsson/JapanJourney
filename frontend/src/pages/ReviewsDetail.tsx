@@ -40,47 +40,27 @@ const PlaceRating = styled.span`
 `;
 
 interface ReviewType {
-    reviews_id: number;
-    user_id: number;
-    place_id: number;
     rating: number;
     comment: string;
     created: string;
     name: string;
-    region: string;
-    city: string;
-    category: string;
-    description: string;
     image_url: string;
-    avg_rating: number;
-    lat: number;
-    lon: number;
 }
 
 function ReviewsDetail() {
     const { id } = useParams();
     const reviewId = id ? parseInt(id) : undefined;
     const [review, setReview] = useState<ReviewType>({
-        reviews_id: 0,
-        user_id: 0,
-        place_id: 0,
         rating: 0,
         comment: "",
         created: "",
         name: "",
-        region: "",
-        city: "",
-        category: "",
-        description: "",
         image_url: "",
-        avg_rating: 0,
-        lat: 0,
-        lon: 0,
     });
 
     useEffect(() => {
         if (reviewId !== undefined) {
-            fetch(`api/reviews/${reviewId}`, {
+            fetch(`/api/reviews/${reviewId}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -143,7 +123,9 @@ function ReviewsDetail() {
         <Fragment>
             <Detailswrapper>
                 <Header>Your Review</Header>
-                <PlaceImg src={review.image_url} alt="Place cover image" />
+                {review.image_url && (
+                    <PlaceImg src={review.image_url} alt="Place cover image" />
+                )}
                 <ContentContainer>
                     <ContentWrapper>
                         <PlaceName>{review.name}</PlaceName>

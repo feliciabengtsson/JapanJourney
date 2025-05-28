@@ -152,8 +152,6 @@ interface PlaceType {
     description: string;
     image_url: string;
     avg_rating: number;
-    lat: number;
-    lon: number;
 }
 
 function Startview() {
@@ -167,7 +165,7 @@ function Startview() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("api/places", {
+        fetch("/api/places", {
             method: "GET",
             credentials: "include",
         })

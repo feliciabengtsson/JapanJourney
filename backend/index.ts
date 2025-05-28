@@ -205,6 +205,32 @@ app.post('/api/favourites', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
+app.get('/api/favourites', async (request: Request, response: Response) => {
+    const token: string = request.cookies.token
+    if (!token) {
+        response.status(401).send('Unauthorized')
+        return
+    }
+    try {
+        const users = await client.query<Tokens>(
+            'SELECT user_id FROM tokens WHERE token = $1',
+            [token]
+        )
+        const userId = users.rows[0].user_id
+
+        const { rows } = await client.query<Favourites>(
+            `SELECT p.* FROM favourites f
+			JOIN places p ON f.place_id = p.places_id
+			WHERE f.user_id = $1`,
+            [userId]
+        )
+
+        response.status(200).send(rows)
+    } catch (error) {
+        console.error(error)
+        response.status(500).send('error')
+    }
+})
 app.post('/api/reviews', async (request: Request, response: Response) => {
     try {
         const userId: number = request.body.user_id

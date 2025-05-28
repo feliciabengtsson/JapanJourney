@@ -7,6 +7,7 @@ import { useContext } from "react";
 const NavWrapper = styled.div`
     width: 85%;
     height: 100vh;
+	max-width: 30rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -81,7 +82,7 @@ function SideNav(props: Nav) {
     const { logout } = useContext(UserContext);
     const handleLogout = async () => {
         try {
-            const response = await fetch("api/logout", {
+            const response = await fetch("/api/logout", {
                 method: "POST",
                 credentials: "include",
                 headers: {

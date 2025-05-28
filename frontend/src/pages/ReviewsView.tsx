@@ -25,6 +25,7 @@ const ContentCard = styled.div`
     justify-content: center;
     align-items: baseline;
     width: 75vw;
+    max-width: 25rem;
     height: 20vh;
     border-radius: 1rem;
     background: lightblue;
@@ -60,6 +61,9 @@ const ReviewsRed = styled.div`
     background: var(--color-secondary);
     text-align: center;
     cursor: pointer;
+    @media (min-width: 600px) {
+        right: 7rem;
+    }
 `;
 const IconArrow = styled.i`
     font-size: 1.6rem;
@@ -69,10 +73,6 @@ const IconArrow = styled.i`
 
 interface Reviews {
     reviews_id: number;
-    user_id: number;
-    places_id: number;
-    rating: number;
-    comment: string;
     name: string;
     image_url: string;
 }
@@ -81,7 +81,7 @@ function ReviewsView() {
     const [reviews, setReviews] = useState<Reviews[]>([]);
 
     useEffect(() => {
-        fetch("api/profile/reviews", {
+        fetch("/api/profile/reviews", {
             method: "GET",
             credentials: "include",
         })
