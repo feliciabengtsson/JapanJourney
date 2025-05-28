@@ -44,7 +44,7 @@ function ExploreView() {
             .replace(/[^\x20-\x7E]/g, "");
 
         if (regions.includes(queryValue)) {
-            fetch(`http://localhost:8080/jj/places?region=${queryValue}`, {
+            fetch(`api/places?region=${queryValue}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -58,7 +58,7 @@ function ExploreView() {
                     }
                 });
         } else {
-            fetch(`http://localhost:8080/jj/places?city=${queryValue}`, {
+            fetch(`api/places?city=${queryValue}`, {
                 method: "GET",
                 credentials: "include",
             })

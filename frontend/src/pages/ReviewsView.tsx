@@ -81,7 +81,7 @@ function ReviewsView() {
     const [reviews, setReviews] = useState<Reviews[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/jj/profile/reviews", {
+        fetch("api/profile/reviews", {
             method: "GET",
             credentials: "include",
         })

@@ -95,7 +95,7 @@ function CategoriesDetail() {
     const [cities, setCities] = useState<PlaceType[]>([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/jj/places?${params}`, {
+        fetch(`api/places?${params}`, {
             method: "GET",
             credentials: "include",
         })

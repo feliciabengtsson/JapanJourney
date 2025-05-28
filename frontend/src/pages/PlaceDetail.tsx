@@ -130,7 +130,7 @@ function PlaceDetail() {
 
     useEffect(() => {
         if (placeId !== undefined) {
-            fetch(`http://localhost:8080/jj/places/${placeId}`, {
+            fetch(`api/places/${placeId}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -140,7 +140,7 @@ function PlaceDetail() {
                 });
         }
 
-        fetch(`http://localhost:8080/jj/favourites/${placeId}`, {
+        fetch(`api/favourites/${placeId}`, {
             method: "GET",
             credentials: "include",
         })
@@ -215,7 +215,7 @@ function PlaceDetail() {
                 place_id: id,
             };
 
-            await fetch("http://localhost:8080/jj/favourites", {
+            await fetch("api/favourites", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -229,7 +229,7 @@ function PlaceDetail() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:8080/jj/favourites/${id}`,
+                    `api/favourites/${id}`,
                     {
                         method: "DELETE",
                     }

@@ -81,7 +81,7 @@ function SideNav(props: Nav) {
     const { logout } = useContext(UserContext);
     const handleLogout = async () => {
         try {
-            const response = await fetch("http://localhost:8080/jj/logout", {
+            const response = await fetch("api/logout", {
                 method: "POST",
                 credentials: "include",
                 headers: {

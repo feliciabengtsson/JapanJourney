@@ -80,7 +80,7 @@ function ReviewsDetail() {
 
     useEffect(() => {
         if (reviewId !== undefined) {
-            fetch(`http://localhost:8080/jj/reviews/${reviewId}`, {
+            fetch(`api/reviews/${reviewId}`, {
                 method: "GET",
                 credentials: "include",
             })

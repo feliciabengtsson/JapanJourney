@@ -72,7 +72,7 @@ interface LoginInfo {
     password: string
 }
 
-app.get('/jj/places', async (request: Request, response: Response) => {
+app.get('/places', async (request: Request, response: Response) => {
     try {
         const { region, city, category } = request.query
 
@@ -114,7 +114,7 @@ app.get('/jj/places', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.get('/jj/places/:id', async (request: Request, response: Response) => {
+app.get('/places/:id', async (request: Request, response: Response) => {
     try {
         const placeId = request.params.id
 
@@ -129,7 +129,7 @@ app.get('/jj/places/:id', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.get('/jj/favourites/:id', async (request: Request, response: Response) => {
+app.get('/favourites/:id', async (request: Request, response: Response) => {
     const token: string = request.cookies.token
     if (!token) {
         response.status(401).send('Unauthorized')
@@ -157,9 +157,7 @@ app.get('/jj/favourites/:id', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.delete(
-    '/jj/favourites/:id',
-    async (request: Request, response: Response) => {
+app.delete('/favourites/:id', async (request: Request, response: Response) => {
         const placeId: string = request.params.id
         try {
             await client.query('DELETE FROM favourites WHERE place_id = $1', [
@@ -172,7 +170,7 @@ app.delete(
         }
     }
 )
-app.post('/jj/favourites', async (request: Request, response: Response) => {
+app.post('/favourites', async (request: Request, response: Response) => {
     const token: string = request.cookies.token
     if (!token) {
         response.status(401).send('Unauthorized')
@@ -202,7 +200,7 @@ app.post('/jj/favourites', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.post('/jj/reviews', async (request: Request, response: Response) => {
+app.post('/reviews', async (request: Request, response: Response) => {
     try {
         const userId: number = request.body.user_id
         const placeId: number = request.body.place_id
@@ -223,7 +221,7 @@ app.post('/jj/reviews', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.get('/jj/reviews/:id', async (request: Request, response: Response) => {
+app.get('/reviews/:id', async (request: Request, response: Response) => {
     try {
         const reviewId = request.params.id
 
@@ -238,9 +236,7 @@ app.get('/jj/reviews/:id', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.get(
-    '/jj/profile/reviews/',
-    async (request: Request, response: Response) => {
+app.get('/profile/reviews/', async (request: Request, response: Response) => {
         const token: string = request.cookies.token
         if (!token) {
             response.status(401).send('Unauthorized')
@@ -268,7 +264,7 @@ app.get(
         }
     }
 )
-app.get('/jj/profile', async (request: Request, response: Response) => {
+app.get('/profile', async (request: Request, response: Response) => {
     const token: string = request.cookies.token
     if (!token) {
         response.status(401).send('Unauthorized')
@@ -286,9 +282,7 @@ app.get('/jj/profile', async (request: Request, response: Response) => {
         response.status(500).send('error')
     }
 })
-app.post(
-    '/jj/login',
-    async (request: Request<object, object, LoginInfo>, response: Response) => {
+app.post('/login', async (request: Request<object, object, LoginInfo>, response: Response) => {
         const { email, password } = request.body
 
         if (!email || !password) {
@@ -326,9 +320,7 @@ app.post(
         }
     }
 )
-app.post(
-    '/jj/signup',
-    async (request: Request<object, object, LoginInfo>, response: Response) => {
+app.post('/signup', async (request: Request<object, object, LoginInfo>, response: Response) => {
         const { username, email, password } = request.body
 
         if (!username || !email || !password) {
@@ -348,7 +340,7 @@ app.post(
         }
     }
 )
-app.post('/jj/logout', async (request: Request, response: Response) => {
+app.post('/logout', async (request: Request, response: Response) => {
     const token: string = request.cookies.token
     if (token) {
         const findToken = await client.query<Tokens>(

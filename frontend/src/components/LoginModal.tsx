@@ -98,7 +98,7 @@ function LoginModal(props: Login) {
 
         try {
             if (input.email !== "" && input.password !== "") {
-                const response = await fetch("http://localhost:8080/jj/login", {
+                const response = await fetch("api/login", {
                     method: "POST",
                     credentials: "include",
                     headers: {

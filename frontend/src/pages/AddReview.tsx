@@ -14,6 +14,7 @@ import CoverImg from "../assets/images/reviews-placeholder.jpg";
 
 import "@smastrom/react-rating/style.css";
 import UserContext from "../UserContext";
+
 const circleShape = (
     <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
 );
@@ -25,6 +26,7 @@ const myStyles = {
     inactiveFillColor: "none",
     inactiveStrokeColor: "var(--color-secondary)",
 };
+
 const Detailswrapper = styled.div`
     width: 100vw;
     height: 79vh;
@@ -121,7 +123,7 @@ function AddReview() {
         };
 
         try {
-            await fetch("http://localhost:8080/jj/reviews", {
+            await fetch("api/reviews", {
                 method: "POST",
                 credentials: "include",
                 headers: {

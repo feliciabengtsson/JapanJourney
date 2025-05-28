@@ -86,7 +86,7 @@ function FavouritesView() {
 
     useEffect(() => {
         if (id !== undefined) {
-            fetch(`http://localhost:8080/jj/favourites/${id}`, {
+            fetch(`api/favourites/${id}`, {
                 method: "GET",
                 credentials: "include",
             })

@@ -167,7 +167,7 @@ function Startview() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:8080/jj/places", {
+        fetch("api/places", {
             method: "GET",
             credentials: "include",
         })

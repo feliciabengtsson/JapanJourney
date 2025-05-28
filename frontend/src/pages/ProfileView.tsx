@@ -80,7 +80,7 @@ function ProfileView() {
     const [user, setUser] = useState<User>();
 
     useEffect(() => {
-        fetch("http://localhost:8080/jj/profile", {
+        fetch("api/profile", {
             method: "GET",
             credentials: "include",
         })

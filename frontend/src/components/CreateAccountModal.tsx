@@ -98,7 +98,7 @@ function CreateAccountModal(props: Signup) {
         event.preventDefault(); // Prevents default form submission behavior
 
         try {
-            const response = await fetch("http://localhost:8080/jj/signup", {
+            const response = await fetch("api/signup", {
                 method: "POST",
                 credentials: "include",
                 headers: {
