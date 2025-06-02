@@ -97,9 +97,11 @@ function ReviewsView() {
                 <Header>Reviews</Header>
                 <ReviewsWrapper>
                     {reviews.map((review) => (
-                        <Link to={`/reviews/${review.reviews_id}`}>
+                        <Link
+                            to={`/reviews/${review.reviews_id}`}
+                            key={review.reviews_id}
+                        >
                             <ContentCard
-                                key={review.reviews_id}
                                 style={{
                                     backgroundImage: `url(${review.image_url})`,
                                 }}

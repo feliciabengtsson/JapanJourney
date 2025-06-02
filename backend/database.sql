@@ -190,7 +190,71 @@ VALUES
 
 ('Pokémon Center Mega Tokyo', 'Kanto', 'Tokyo', 'Anime',
   'A flagship Pokémon store offering exclusive merchandise, themed decor, and special events for fans of all ages.',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Pokemon_Center_Tohoku_in_SENDAI_PARCO.jpg/1920px-Pokemon_Center_Tohoku_in_SENDAI_PARCO.jpg', 4.8);
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Pokemon_Center_Tohoku_in_SENDAI_PARCO.jpg/1920px-Pokemon_Center_Tohoku_in_SENDAI_PARCO.jpg', 4.8),
+
+('Yamadera Temple', 'Tohoku', 'Yamagata', 'History',
+ 'A temple built into the mountainside offering breathtaking views and spiritual serenity.',
+ 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Risshaku-ji_Kaisan-do_201706b.jpg/1280px-Risshaku-ji_Kaisan-do_201706b.jpg', 4.6),
+
+('Lake Towada', 'Tohoku', 'Aomori', 'Nature',
+ 'A scenic crater lake with hiking trails, waterfalls, and autumn colors.',
+ 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Lake_Towada_from_Ohanabe_2008.jpg/1280px-Lake_Towada_from_Ohanabe_2008.jpg', 4.7),
+
+('Ritsurin Garden', 'Shikoku', 'Takamatsu', 'Nature',
+ 'One of Japan’s most famous historical gardens, featuring ponds and teahouses.',
+ 'https://images.unsplash.com/photo-1686794741664-e6630f1c14da?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Uml0c3VyaW4lMjBHYXJkZW58ZW58MHx8MHx8fDA%3D', 4.8),
+
+('Iya Valley', 'Shikoku', 'Miyoshi', 'Nature',
+ 'Remote mountain valley with vine bridges and deep gorges.',
+ 'https://images.unsplash.com/photo-1614651857189-9e8cefefaf51?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.7),
+
+('Furano Flower Fields', 'Hokkaido', 'Furano', 'Nature',
+ 'Fields of lavender and colorful flowers stretching over rolling hills.',
+ 'https://images.unsplash.com/photo-1626911635167-0b3006fbda39?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.6),
+
+('Tottori Sand Dunes', 'Chugoku', 'Tottori', 'Nature',
+ 'Japan’s only large sand dune area, with camel rides and sand museum.',
+ 'https://images.unsplash.com/photo-1702973258145-f0a08f461c26?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.5),
+
+('Kurokawa Onsen', 'Kyushu', 'Minamioguni', 'Relaxation',
+ 'Charming hot spring town with rustic baths and traditional ryokan.',
+ 'https://images.unsplash.com/photo-1706017595998-91459e6bfd4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.8),
+
+('Zamami Island', 'Okinawa', 'Zamami', 'Nature',
+ 'Crystal-clear waters and coral reefs perfect for snorkeling and beach relaxation.',
+ 'https://images.unsplash.com/photo-1558498264-f37ef4869a0d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.7),
+
+('Senshū Park', 'Tohoku', 'Akita', 'Nature',
+ 'A large park built on the site of the former Kubota Castle',
+ 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Osumi-Yagura_of_Kubota-Castle_20160424.jpg/800px-Osumi-Yagura_of_Kubota-Castle_20160424.jpg', 4.0),
+
+('Imayo Tsukasa Sake Brewery', 'Chubu', 'Niigata', 'Food',
+ 'Imayo Tsukasa Sake Brewery is a longstanding producer of sake that started brewing in the mid-Meiji Period (1868-1912).',
+ 'https://images.unsplash.com/photo-1572129359165-ab1f4504fa33?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2FrZSUyMGJyZXdlcnl8ZW58MHx8MHx8fDA%3D', 4.5),
+
+('Ouchi-juku', 'Tohoku', 'Fukushima', 'History',
+'A former post town along the Aizu-Nishi Kaido trade route, which connected Aizu with Nikko during the Edo Period.',
+'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ouchijuku_town_like_Edo_era_-_panoramio.jpg/1280px-Ouchijuku_town_like_Edo_era_-_panoramio.jpg', 4.0),
+
+('Kuranomachi Old Town', 'Kanto', 'Tochigi', 'History',
+'It features preserved townscape lined with warehouses and other old buildings from when it was a bustling wholesale district from the late Edo period to the early Showa period.',
+'https://plus.unsplash.com/premium_photo-1723983555783-60e9023cb9b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.1),
+
+('Daimon-ji Temple', 'Kanto', 'Ibaraki', 'History',
+'Founded in 771 by Prince Kaisei, the elder brother of Emperor Kanmu, the temple currently belongs to the Omuro school of Shingon Buddhism.',
+'https://plus.unsplash.com/premium_photo-1691960159059-04976913256a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.6),
+
+('Hoki Museum', 'Kanto', 'Chiba', 'Culture',
+'The Hoki Museum is Japan’s first museum dedicated to realist painting.',
+'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Hoki_museum_outside_front_001.jpg/1920px-Hoki_museum_outside_front_001.jpg', 4.3),
+
+('Toyama Glass Art Museum', 'Hokuriku', 'Toyama', 'Culture',
+'The Toyama Glass Art Museum provides visitors with a space where they can experience and become familiar with glass art.',
+'https://images.unsplash.com/photo-1695747003752-099eb12b9b74?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4.4),
+
+('The Railway Museum', 'Kanto', 'Saitama', 'Culture',
+'The Railway Museum is a celebration of the country’s rich train culture.',
+'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Main_hall_of_the_Railway_Museum_in_Saitama_January_2019.jpg/1280px-Main_hall_of_the_Railway_Museum_in_Saitama_January_2019.jpg', 4.4);
 
 INSERT INTO reviews (user_id, place_id, rating, comment)
 VALUES 

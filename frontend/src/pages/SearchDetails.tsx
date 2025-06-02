@@ -104,8 +104,9 @@ function SearchDetails() {
                     {cities.map((city) => (
                         <Link
                             to={`/categories?${params}&category=${city.category}`}
+							key={city.places_id}
                         >
-                            <ContentCard key={city.places_id}>
+                            <ContentCard>
                                 <TextWrapper>
                                     <p>{city.category}</p>
                                     <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />

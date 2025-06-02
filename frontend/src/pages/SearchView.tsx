@@ -76,14 +76,13 @@ function SearchView() {
     const region = searchParams.get("region");
     const city = searchParams.get("city");
     const params = new URLSearchParams();
+    const [cities, setCities] = useState<PlaceType[]>([]);
 
     if (region) {
         params.append("region", region);
     } else if (city) {
         params.append("city", city);
     }
-
-    const [cities, setCities] = useState<PlaceType[]>([]);
 
     useEffect(() => {
         fetch(`/api/places?${params}`, {
@@ -105,6 +104,19 @@ function SearchView() {
                     console.log(filteredCities, "filter");
                     setCities(filteredCities);
                     return;
+                } else if (region) {
+                    const filteredRegion = Array.from(
+                        new Set(
+							result.map((r: { city: string }) => r.city)
+						)
+                    ).map((city) => {
+                        return result.find(
+                            (r: { city: string }) => r.city === city
+                        );
+                    });
+                    console.log(filteredRegion, "filter");
+                    setCities(filteredRegion);
+                    return;
                 } else {
                     setCities(result);
                     return;
@@ -123,8 +135,11 @@ function SearchView() {
                 {region ? (
                     <SearchWrapper>
                         {cities.map((city) => (
-                            <Link to={`details?city=${city.city}`}>
-                                <ContentCard key={city.places_id}>
+                            <Link
+                                to={`details?city=${city.city}`}
+                                key={city.places_id}
+                            >
+                                <ContentCard>
                                     <TextWrapper>
                                         <p>{city.city}</p>
                                         <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />

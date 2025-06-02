@@ -105,13 +105,15 @@ function ReviewsDetail() {
         }
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
-            circles.push(
+            const key = `empty${circles.length}`
+			circles.push(
                 <i
                     style={{
                         fontSize: "1rem",
                         margin: "0 .1em",
                         color: "var(--color-secondary)",
                     }}
+					key={key}
                     className="fa-regular fa-circle"
                 ></i>
             );

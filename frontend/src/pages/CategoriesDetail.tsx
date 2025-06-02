@@ -121,9 +121,11 @@ function CategoriesDetail() {
                     </Header>
                     <Favouritewrapper>
                         {cities.map((city) => (
-                            <Link to={`/places/${city.places_id}`}>
+                            <Link
+                                to={`/places/${city.places_id}`}
+                                key={city.places_id}
+                            >
                                 <ContentCard
-                                    key={city.places_id}
                                     style={{
                                         backgroundImage: `url(${city.image_url})`,
                                         backgroundSize: "cover",
@@ -147,9 +149,11 @@ function CategoriesDetail() {
                     <Header>{category}</Header>
                     <Favouritewrapper>
                         {cities.map((city) => (
-                            <Link to={`/places/${city.places_id}`}>
+                            <Link
+                                to={`/places/${city.places_id}`}
+                                key={city.places_id}
+                            >
                                 <ContentCard
-                                    key={city.places_id}
                                     style={{
                                         backgroundImage: `url(${city.image_url})`,
                                     }}

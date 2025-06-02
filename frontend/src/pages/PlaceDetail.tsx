@@ -198,25 +198,20 @@ function PlaceDetail() {
         }
         //make sure there is empty circles filled up if the rating is low
         while (circles.length < 5) {
-            circles.push(
+            const key = `empty${circles.length}`
+			circles.push(
                 <i
                     style={{
                         fontSize: "1rem",
                         margin: "0 .1em",
                         color: "var(--color-secondary)",
                     }}
+					key={key}
                     className="fa-regular fa-circle"
-                    key={circles.length++}
                 ></i>
             );
         }
         return circles;
-    };
-    const handleMouseEnter = () => {
-        setIsHover(true);
-    };
-    const handleMouseLeave = () => {
-        setIsHover(false);
     };
     const handleFavourite = async () => {
         if (!isFavourite) {
@@ -264,8 +259,8 @@ function PlaceDetail() {
                             alt="Place cover image"
                         />
                         <StyledSakuraIcon
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
+                            onMouseEnter={() => setIsHover(true)}
+                            onMouseLeave={() => setIsHover(false)}
                             onClick={handleFavourite}
                             style={{
                                 fill:

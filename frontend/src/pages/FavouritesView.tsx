@@ -105,9 +105,11 @@ function FavouritesView() {
                 <Header>Favourites</Header>
                 <Favouritewrapper>
                     {favourites.map((place) => (
-                        <Link to={`/places/${place.places_id}`}>
+                        <Link
+                            to={`/places/${place.places_id}`}
+                            key={place.places_id}
+                        >
                             <ContentCard
-                                key={place.places_id}
                                 style={{
                                     backgroundImage: `url(${place.image_url})`,
                                 }}
