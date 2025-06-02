@@ -1,3 +1,5 @@
+/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map 
+https://barker.codes/blog/unique-array-values-in-javascript/*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useSearchParams } from "react-router-dom";
