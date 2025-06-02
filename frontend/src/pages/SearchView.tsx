@@ -28,7 +28,7 @@ const ContentCard = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 79vw;
-	max-width: 40rem;
+    max-width: 40rem;
     height: 14vh;
     border-radius: 3rem;
     background: var(--color-neutral-light);
@@ -52,11 +52,11 @@ const Image = styled.img`
     height: inherit;
     border-radius: 0 3rem 3rem 0;
     object-fit: cover;
-	@media (min-width: 600px) {
-		width: 16rem;
+    @media (min-width: 600px) {
+        width: 16rem;
     }
     @media (min-width: 980px) {
-		width: 21rem;
+        width: 21rem;
     }
 `;
 
@@ -92,7 +92,23 @@ function SearchView() {
         })
             .then((response) => response.json())
             .then((result) => {
-                setCities(result);
+                if (city) {
+                    const filteredCities = Array.from(
+                        new Set(
+                            result.map((r: { category: string }) => r.category)
+                        )
+                    ).map((category) => {
+                        return result.find(
+                            (r: { category: string }) => r.category === category
+                        );
+                    });
+                    console.log(filteredCities, "filter");
+                    setCities(filteredCities);
+                    return;
+                } else {
+                    setCities(result);
+                    return;
+                }
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -128,8 +144,9 @@ function SearchView() {
                         {cities.map((city) => (
                             <Link
                                 to={`/categories?${params}&category=${city.category}`}
+                                key={city.places_id}
                             >
-                                <ContentCard key={city.places_id}>
+                                <ContentCard>
                                     <TextWrapper>
                                         <p>{city.category}</p>
                                         <Arrow className="hgi hgi-stroke hgi-arrow-right-01" />

@@ -36,9 +36,9 @@ const regions = [
 function ExploreView() {
     const navigate = useNavigate();
     const handleSelect = (r: string | null) => {
-        if (r === null) return
-		
-		const queryValue = r
+        if (r === null) return;
+
+        const queryValue = r
             .trim()
             .split(" ")[0]
             .replace(/[^\x20-\x7E]/g, "");

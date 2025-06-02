@@ -80,8 +80,8 @@ interface FormType {
 interface User {
     users_id: number;
     username: string;
-	email: string;
-	password: string;
+    email: string;
+    password: string;
 }
 
 function LoginModal(props: Login) {
@@ -108,7 +108,7 @@ function LoginModal(props: Login) {
                 });
 
                 if (response.ok) {
-                    const userData = await response.json() as User;
+                    const userData = (await response.json()) as User;
                     login(userData);
                     navigate("/places"); /// Redirect to new page
                 } else {

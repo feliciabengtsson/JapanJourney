@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 interface Book {
     id: number;
@@ -19,7 +19,7 @@ interface BookContext {
 
 const MyBooksContext = createContext<BookContext>({
     books: [],
-    setBooks: () => {}
+    setBooks: () => {},
 });
 
 export default MyBooksContext;

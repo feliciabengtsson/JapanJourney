@@ -18,6 +18,8 @@ const Favouritewrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    height: 85vh;
+    overflow-y: auto;
 `;
 const ContentCard = styled.div`
     position: relative;
@@ -25,7 +27,7 @@ const ContentCard = styled.div`
     justify-content: center;
     align-items: baseline;
     width: 75vw;
-	max-width: 25rem;
+    max-width: 25rem;
     height: 20vh;
     border-radius: 1rem;
     background: lightblue;
@@ -124,7 +126,7 @@ function CategoriesDetail() {
                                     key={city.places_id}
                                     style={{
                                         backgroundImage: `url(${city.image_url})`,
-                                        backgroundSize: "cover"
+                                        backgroundSize: "cover",
                                     }}
                                 >
                                     <FavouriteWhite>

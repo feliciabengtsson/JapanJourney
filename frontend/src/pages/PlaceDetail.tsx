@@ -134,7 +134,7 @@ function PlaceDetail() {
         category: "",
         description: "",
         image_url: "",
-        avg_rating: 0
+        avg_rating: 0,
     });
     const [isFavourite, setIsFavourite] = useState(false);
     const [isHover, setIsHover] = useState(false);

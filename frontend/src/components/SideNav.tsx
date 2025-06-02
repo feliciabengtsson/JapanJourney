@@ -7,7 +7,7 @@ import { useContext } from "react";
 const NavWrapper = styled.div`
     width: 85%;
     height: 100vh;
-	max-width: 30rem;
+    max-width: 30rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -89,9 +89,9 @@ function SideNav(props: Nav) {
                     "Content-Type": "application/json",
                 },
             });
-            console.log(response, 'response logout')
+            console.log(response, "response logout");
             if (response.ok) {
-                console.log('lyckad utloggning')
+                console.log("lyckad utloggning");
                 navigate("/"); /// Redirect to new page
             }
         } catch (error) {

@@ -70,10 +70,10 @@ const LoginRed = styled.div`
     @media (min-width: 1200px) {
         right: 33rem;
     }
-	@media (min-width: 1430px) {
+    @media (min-width: 1430px) {
         right: 39rem;
     }
-	@media (min-width: 1630px) {
+    @media (min-width: 1630px) {
         right: 46rem;
     }
 `;

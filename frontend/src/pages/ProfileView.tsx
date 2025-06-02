@@ -28,7 +28,7 @@ const ContentCard = styled.div<{ $bgImg: string }>`
     justify-content: center;
     align-items: baseline;
     width: 75vw;
-	max-width: 25rem;
+    max-width: 25rem;
     height: 20vh;
     border-radius: 1rem;
     background: url(${(props) => props.$bgImg});
@@ -64,9 +64,9 @@ const ProfileRed = styled.div`
     background: var(--color-secondary);
     text-align: center;
     cursor: pointer;
-	@media (min-width: 600px) {
+    @media (min-width: 600px) {
         right: 7rem;
-	}
+    }
 `;
 const IconArrow = styled.i`
     font-size: 1.8rem;

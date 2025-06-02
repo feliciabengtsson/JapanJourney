@@ -25,7 +25,9 @@ function MainContainer() {
     const hideComponent = location.pathname === "/";
     const small = smallPaths.find((path) => matchPath(path, location.pathname));
 
-    const medium = mediumPaths.find((path) => matchPath(path, location.pathname));
+    const medium = mediumPaths.find((path) =>
+        matchPath(path, location.pathname)
+    );
 
     return (
         <Fragment>

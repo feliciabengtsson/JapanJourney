@@ -27,8 +27,8 @@ const MainWrapper = styled.div`
 `;
 const SearchWrapper = styled.div`
     position: relative;
-	max-width: fit-content;
-	margin: auto;
+    max-width: fit-content;
+    margin: auto;
 `;
 const InputSearch = styled.input`
     width: 21rem;
@@ -39,11 +39,11 @@ const InputSearch = styled.input`
     font-family: Poppins;
     font-size: 1.2rem;
     padding-left: 1rem;
-	@media (min-width: 890px) {
-		width: 31rem;
-    	height: 3rem;
-		font-size: 1rem;
-	}
+    @media (min-width: 890px) {
+        width: 31rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
 `;
 const IconSearch = styled.i`
     position: absolute;
@@ -53,19 +53,19 @@ const IconSearch = styled.i`
     font-weight: 800;
     color: var(--color-secondary);
     cursor: pointer;
-	@media (min-width: 890px) {
-		top: .7rem;
-	}
+    @media (min-width: 890px) {
+        top: 0.7rem;
+    }
 `;
 const FilterWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 1rem auto;
-	@media (min-width: 890px) {
-		justify-content: center;
-		gap: 1rem;
-	}
+    @media (min-width: 890px) {
+        justify-content: center;
+        gap: 1rem;
+    }
 `;
 const Filter = styled.select`
     text-align: center;
@@ -92,9 +92,9 @@ const PlacesContainer = styled.div`
     grid-template-rows: auto;
     column-gap: 1rem;
     margin-top: 2rem;
-	@media (min-width: 890px) {
-		grid-template-columns: repeat(3, 1fr);
-	}
+    @media (min-width: 890px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 `;
 const PlacesLink = styled(Link)`
     display: flex;
@@ -111,33 +111,33 @@ const PlacesCard = styled.div`
     border-radius: 50px;
     background: var(--color-neutral-light);
     margin: 1rem auto;
-	@media (min-width: 890px) {
-		width: 14rem;
-    	height: 7rem;
-		border-radius: 60px;
-	}
+    @media (min-width: 890px) {
+        width: 14rem;
+        height: 7rem;
+        border-radius: 60px;
+    }
 `;
 const PlaceImg = styled.img`
     width: 3.1rem;
     height: 3.1rem;
     border-radius: 50%;
-	@media (min-width: 890px) {
-		width: 6rem;
-		height: 6rem;
-	}
+    @media (min-width: 890px) {
+        width: 6rem;
+        height: 6rem;
+    }
 `;
 const DescriptionWrapper = styled.div`
     width: 5rem;
-	@media (min-width: 890px) {
-		width: 6.5rem;
-	}
+    @media (min-width: 890px) {
+        width: 6.5rem;
+    }
 `;
 const PlaceName = styled.p`
     font-size: 0.7rem;
     margin: 0;
-	@media (min-width: 890px) {
-		font-size: 0.9rem;
-	}
+    @media (min-width: 890px) {
+        font-size: 0.9rem;
+    }
 `;
 const PlaceRating = styled.span`
     margin: 0 auto;

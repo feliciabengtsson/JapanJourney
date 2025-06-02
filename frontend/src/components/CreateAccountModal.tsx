@@ -15,7 +15,7 @@ const ModalContainer = styled.div`
 `;
 const ModalWrapper = styled.div`
     display: block;
-    background: rgba(255, 196, 178, 0.90);
+    background: rgba(255, 196, 178, 0.9);
     width: 70%;
     max-width: 600px;
     height: fit-content;

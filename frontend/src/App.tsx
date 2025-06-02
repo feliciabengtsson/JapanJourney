@@ -64,10 +64,10 @@ function App() {
                         path="places/:id/reviews/add"
                         element={<AddReview />}
                     />
-					<Route path="/search" element={<SearchView />} />
-					<Route path="/search/details" element={<SearchDetails />} />
-					<Route path="/categories" element={<CategoriesDetail />} />
-					<Route path="/explore" element={<ExploreView />} />
+                    <Route path="/search" element={<SearchView />} />
+                    <Route path="/search/details" element={<SearchDetails />} />
+                    <Route path="/categories" element={<CategoriesDetail />} />
+                    <Route path="/explore" element={<ExploreView />} />
                 </Routes>
                 <MainContainer />
                 <GlobalStyle />
