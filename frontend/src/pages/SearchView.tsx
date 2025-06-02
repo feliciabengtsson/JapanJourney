@@ -95,28 +95,25 @@ function SearchView() {
             .then((result) => {
                 if (city) {
                     const filteredCities = Array.from(
+                        //creates new array
                         new Set(
-                            result.map((r: { category: string }) => r.category)
+                            result.map((r: { category: string }) => r.category) //gets all the categories from the result
                         )
-                    ).map((category) => {
+                    ).map((category) => { //map categories and the get the first object in the result for every category
                         return result.find(
                             (r: { category: string }) => r.category === category
                         );
                     });
-                    console.log(filteredCities, "filter");
                     setCities(filteredCities);
                     return;
                 } else if (region) {
                     const filteredRegion = Array.from(
-                        new Set(
-							result.map((r: { city: string }) => r.city)
-						)
+                        new Set(result.map((r: { city: string }) => r.city))
                     ).map((city) => {
                         return result.find(
                             (r: { city: string }) => r.city === city
                         );
                     });
-                    console.log(filteredRegion, "filter");
                     setCities(filteredRegion);
                     return;
                 } else {

@@ -216,7 +216,6 @@ function PlaceDetail() {
     const handleFavourite = async () => {
         if (!isFavourite) {
             setIsFavourite(true);
-            console.log("add favourite");
             const favouriteForm = {
                 place_id: id,
             };
@@ -231,7 +230,6 @@ function PlaceDetail() {
             });
         } else {
             setIsFavourite(false);
-            console.log("remove favourite");
 
             try {
                 const response = await fetch(`/api/favourites/${id}`, {

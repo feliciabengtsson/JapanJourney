@@ -1,5 +1,8 @@
 /* https://github.com/react-map/react-map?tab=readme-ov-file#usage 
-https://stackoverflow.com/questions/37512497/remove-whitespace-from-an-argument-into-a-js-function*/
+https://stackoverflow.com/questions/37512497/remove-whitespace-from-an-argument-into-a-js-function
+https://www.slingacademy.com/article/refining-content-by-removing-unwanted-symbols-in-javascript-strings/?utm_source=chatgpt.com
+https://www.w3resource.com/javascript-exercises/javascript-string-exercise-32.php
+https://www.geeksforgeeks.org/how-to-remove-all-non-ascii-characters-from-the-string-using-javascript/*/
 import styled from "styled-components";
 import { Fragment } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +42,9 @@ function ExploreView() {
         if (r === null) return;
 
         const queryValue = r
-            .trim()
-            .split(" ")[0]
-            .replace(/[^\x20-\x7E]/g, "");
+            .trim() //remove whitespaces
+            .split(" ")[0]	//gets the first word
+            .replace(/[^\x20-\x7E]/g, ""); //remove unwanted signs
 
         if (regions.includes(queryValue)) {
             fetch(`/api/places?region=${queryValue}`, {

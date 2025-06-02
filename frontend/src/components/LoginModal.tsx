@@ -112,7 +112,6 @@ function LoginModal(props: Login) {
                     login(userData);
                     navigate("/places"); /// Redirect to new page
                 } else {
-                    console.log("fel inlogg)");
                     setLoginInfo(true);
                 }
             }

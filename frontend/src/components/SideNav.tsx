@@ -89,9 +89,7 @@ function SideNav(props: Nav) {
                     "Content-Type": "application/json",
                 },
             });
-            console.log(response, "response logout");
             if (response.ok) {
-                console.log("lyckad utloggning");
                 navigate("/"); /// Redirect to new page
             }
         } catch (error) {

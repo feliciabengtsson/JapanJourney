@@ -110,9 +110,8 @@ function CreateAccountModal(props: Signup) {
             if (response.ok) {
                 navigate("/"); // Redirect to new page
             } else if (formData.email === "" || formData.username === "") {
-                console.log("behövs email och username");
+                console.log("need email and username");
             } else {
-                console.log("fel uppgifter)");
                 setsignupInfo(true);
             }
         } catch (error) {

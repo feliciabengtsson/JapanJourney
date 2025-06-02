@@ -231,7 +231,7 @@ function Startview() {
         const searchInput = event.target.value;
         setSearch(searchInput);
 
-        const filteredSearch = places.filter((place) =>
+        const filteredSearch = places.filter((place) =>	//filter array based on search input
             place.name.toLowerCase().includes(searchInput.toLowerCase())
         );
         setFilteredPlaces(filteredSearch);
@@ -241,23 +241,21 @@ function Startview() {
         event
     ) => {
         const { name, value } = event.target;
-        console.log(name, "name", value, "value");
-
         const queryParams = new URLSearchParams();
 
         if (name === "selectedRegion") {
             setSelectedRegion(value);
-            queryParams.append("region", value);
+            queryParams.append("region", value); //add to query
             navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCity") {
             setSelectedCity(value);
-            queryParams.append("city", value);
+            queryParams.append("city", value); //add to query
             navigate(`/search?${queryParams}`); // Redirect to new page
         }
         if (name === "selectedCategory") {
             setSelectedCategory(value);
-            queryParams.append("category", value);
+            queryParams.append("category", value); //add to query
             navigate(`/categories?${queryParams}`); // Redirect to new page
         }
     };
